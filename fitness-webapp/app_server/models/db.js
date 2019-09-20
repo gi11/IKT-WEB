@@ -10,8 +10,8 @@ const errFunction = function (err){
 
 mongoose.connection.on('connected', () => {
     console.log(`Mongoose connected to ${dbURI}`);
-   const Workout =  mongoose.model("Workout");
-   Workout({name: "Student1", grade: '12'}).save(errFunction);
+    // const Workout =  mongoose.model("Workout");
+    // Workout({name: "Student1", grade: '12'}).save(errFunction);
 });
 
 mongoose.connection.on('error', err=>{
