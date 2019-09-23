@@ -1,12 +1,12 @@
 var mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const ExerciseSchema = new Schema({
-    name: {type : String, required},
-    description: String,
-    set: {reuired : true, type : String},
-    reps: {reuired : true, type : String}
-});
+// const ExerciseSchema = new Schema({
+//     name: {type : String, required},
+//     description: String,
+//     set: {reuired : true, type : String},
+//     reps: {reuired : true, type : String}
+// });
 
 //Workout Schema definition
 const WorkoutSchema = new Schema({
