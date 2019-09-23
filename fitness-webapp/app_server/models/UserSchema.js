@@ -11,7 +11,8 @@ const UserSchema = new Schema({
         unique: true,
         required: true
     },
-    hash : String,
+    //TODO: change password into hash and use bcrypt
+    password : String,
 });
 
 UserSchema.methods.setPassword = async function(password){

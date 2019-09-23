@@ -18,15 +18,16 @@ mongoose.connection.on('error', err=>{
     console.log('Mongoose connection error:', err);
 });
 
-// mongoose.connection.on('disconnected', () =>{
-//     console.log('Mongoose disconnected');
-// });
+mongoose.connection.on('disconnected', () =>{
+    console.log('Mongoose disconnected');
+});
 
 const gracefulShutdown= (msg, callback) =>{
     mongoose.connection.close( () =>{
         console.log(`Mongoose disconnected through ${msg}`);
         callback();
     });
+    
 };
 
 // For nodemon restarts
