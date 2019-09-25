@@ -9,6 +9,7 @@ require('./config/passport');
 
 var indexRouter = require('./app_server/routes/index');
 var usersRouter = require('./app_server/routes/users');
+var workoutRouter = require('./app_server/routes/workouts');
 var mongoose = require("mongoose");
 require('./app_server/models/db');
 
@@ -27,6 +28,10 @@ app.use(passport.initialize());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/workouts', workoutRouter);
+
+app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
+app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

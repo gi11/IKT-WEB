@@ -1,0 +1,36 @@
+
+
+mixin DeleteModalBtn(id, name)
+    //Button
+    button.btn.btn-danger(type='button', data-toggle='modal', data-target='#'+id)
+        | Delete
+    // Modal
+    .modal.fade(id=id, tabindex='-1', role='dialog')
+        .modal-dialog.modal-dialog-centered(role='document')
+            .modal-content
+                .modal-header
+                    h5 Delete #{name}
+                    button.close(type='button', data-dismiss='modal')
+                        span(aria-hidden='true') ×
+                .modal-body Are you sure you want to delete #{name}?
+                .modal-footer
+                    button.btn.btn-secondary(type='button', data-dismiss='modal') Cancel
+                    button.btn.btn-danger(type='button') Delete #{name}
+
+mixin EditModalBtn(id, name)
+    //Button
+    button.btn.btn-primary(type='button', data-toggle='modal', data-target='#'+id)
+        | Edit
+    // Modal
+    .modal.fade(id=id, tabindex='-1', role='dialog')
+        .modal-dialog.modal-dialog-centered(role='document')
+            .modal-content
+                .modal-header
+                    h5 Edit #{name}
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden='true') ×
+                .modal-body
+                    | Form
+                .modal-footer
+                    button.btn.btn-secondary(type='button', data-dismiss='modal') Cancel
+                    button.btn.btn-primary(type='button') Save Changes #{name}
