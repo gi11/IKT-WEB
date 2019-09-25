@@ -1,10 +1,11 @@
 // CONFIGURATION FROM SLIDES TAKES HASHING INTO ACCOUNT:
 var passport = require('passport');
+var Strategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
 
 var User = mongoose.model('User');
 
-passport.use(new LocalStrategy({
+passport.use(new Strategy({
     usernameField: 'username'
     },
     function(username, password, done) {

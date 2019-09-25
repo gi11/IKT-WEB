@@ -1,4 +1,5 @@
 require('./WorkoutSchema')
+require('./UserSchema')
 var mongoose = require("mongoose");
 var dbURI ='mongodb://localhost/fitnessDB';
 

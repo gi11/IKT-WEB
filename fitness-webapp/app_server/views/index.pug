@@ -1,5 +1,7 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  if (!user)
+    p Welcome! Please <a href="/login">log in</a> or <a href="/register">register</a>.
+  else 
+    p Hello, #{user.username} View your <a href="/profile">profile</a>
