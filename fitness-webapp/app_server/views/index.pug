@@ -1,5 +1,5 @@
 extends layout
-include mixins/navbar
+
 block content
   - if (!user)
     p Not Logged in
@@ -9,4 +9,3 @@ block content
   //-   p Welcome! Please <a href="/login">log in</a> or <a href="/register">register</a>.
   //- else 
   //-   p Hello, #{user.username} View your <a href="/profile">profile</a>
-  +navbar(user)

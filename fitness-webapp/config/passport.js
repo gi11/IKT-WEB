@@ -5,13 +5,11 @@ var mongoose = require('mongoose');
 
 var User = mongoose.model('User');
 
-passport.use(new Strategy({
-    usernameField: 'username'
-  },
-  function(username_, password, done) {
-    console.log(`Passport Strategy username_ = ${username_}, password = ${password}, done = ${done}`)
-    User.findOne({ username: username_}, function(err, user) {
-      console.log(`Finding user = ${username_}, err = ${err}, user = ${user}`)
+passport.use(new Strategy(
+  function(username, password, done) {
+    console.log(`Passport Strategy username_ = ${username}, password = ${password}, done = ${done}`)
+    User.findOne({ 'username': username}, function(err, user) {
+      console.log(`Finding user = ${username}, err = ${err}, user = ${user}`)
       if(err) { 
         console.log(`Error finding username, err = ${err}`)
         return done(err); 

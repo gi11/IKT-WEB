@@ -29,7 +29,7 @@ module.exports.showLogin = function(req, res, next) {
 }
 
 module.exports.login = function(req, res) {
-    res.render('index', {title: "Whatever", user: req.user} );
+    res.redirect('/');
 };
 
 module.exports.logout = function(req, res){

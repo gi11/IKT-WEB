@@ -13,7 +13,9 @@ router.get('/', ctrlHome.index);
 router.get('/register', ctrlAuth.showRegister);
 router.post('/register', ctrlAuth.register);
 
+
 router.get('/login', ctrlAuth.showLogin);
+
 router.post('/login', 
     passport.authenticate('local', {failureRedirect: '/login'}), 
     ctrlAuth.login
