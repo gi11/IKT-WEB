@@ -15,7 +15,7 @@ passport.use(new Strategy({
                 message: 'Incorrect username.'
             });
         }
-        if(user.passport != password) {
+        if(!user.vaidPassword(password)) {
             return done(null, false, {
                 message: 'Incorrect password.'
             });
@@ -29,7 +29,7 @@ passport.serializeUser(function(user, cb) {
 });
 
 passport.deserializeUser(function(id, cb) {
-  db.users.findById(id, function (err, user) {
+  User.findOne({ '_id' : id}, function (err, user) {
     if (err) { return cb(err); }
     cb(null, user);
   });
