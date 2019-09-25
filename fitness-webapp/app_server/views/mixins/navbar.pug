@@ -11,7 +11,7 @@ mixin navbar(loggedin)
                 li.nav-item
                     a.nav-link(href='/about') About
             ul.navbar-nav.float-right
-                if (loggedin)
+                if (!loggedin)
                     li.nav-item
                         a.nav-link(href='/login') Login
                     li.nav-item

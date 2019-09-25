@@ -3,19 +3,26 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const passport = require('passport');
-require('./app_server/models/db');
-require('./config/passport');
 
-var indexRouter = require('./app_server/routes/index');
-var usersRouter = require('./app_server/routes/users');
-var workoutRouter = require('./app_server/routes/workouts');
+// Require Passport
+const passport = require('passport');
+
+// Require Database
 var mongoose = require("mongoose");
 require('./app_server/models/db');
 
+// Passport config
+require('./config/passport');
+
+// Laod routers
+var indexRouter = require('./app_server/routes/index');
+var usersRouter = require('./app_server/routes/users');
+var workoutRouter = require('./app_server/routes/workouts');
+
+// Create express server instance
 var app = express();
 
-// view engine setup
+// View engine setup
 app.set('views', path.join(__dirname, 'app_server', 'views'));
 app.set('view engine', 'pug');
 
@@ -24,14 +31,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
+app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js'));
+
 app.use(passport.initialize());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/workouts', workoutRouter);
 
-app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
-app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js'));
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

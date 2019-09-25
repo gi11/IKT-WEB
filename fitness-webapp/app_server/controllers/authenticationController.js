@@ -1,9 +1,9 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
-var passport = require('passport');
+// var passport = require('passport');
 
 module.exports.register= function(req, res) {
-    if(!req.body.name|| !req.body.email|| !req.body.password) {
+    if(!req.body.username|| !req.body.password) {
         res.render('userForm', {"errorMessage":"All fields required"});
     }
     const user= new User();
@@ -14,9 +14,9 @@ module.exports.register= function(req, res) {
             req.flash('error',`Failed to create user account because:${error.message}.`);
             res.render('/');
         } 
-            else{
-                res.redirect('/');
-            }
+        else{
+            res.redirect('/');
+        }
     });
 };
 
@@ -29,10 +29,7 @@ module.exports.showLogin = function(req, res, next) {
 }
 
 module.exports.login = function(req, res) {
-    passport.authenticate('local', {failureRedirect: '/login'}),
-    function(req, res) {
-        res.redirect('/');
-    };
+    res.render('index', {title: "Whatever", user: req.user} );
 };
 
 module.exports.logout = function(req, res){

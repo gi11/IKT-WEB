@@ -7,32 +7,51 @@ var User = mongoose.model('User');
 
 passport.use(new Strategy({
     usernameField: 'username'
-    },
-    function(username, password, done) {
-        User.findOne({ username: username}, function(err, user) {
-            if(err) { return done(err); }
-            if(!user) {return done(null, false, {
-                message: 'Incorrect username.'
-            });
-        }
-        if(!user.vaidPassword(password)) {
-            return done(null, false, {
-                message: 'Incorrect password.'
-            });
-        }
-        return done(null, user);
-    });  })
+  },
+  function(username_, password, done) {
+    console.log(`Passport Strategy username_ = ${username_}, password = ${password}, done = ${done}`)
+    User.findOne({ username: username_}, function(err, user) {
+      console.log(`Finding user = ${username_}, err = ${err}, user = ${user}`)
+      if(err) { 
+        console.log(`Error finding username, err = ${err}`)
+        return done(err); 
+      }
+      if(!user) {
+        console.log(`No user found, user = ${user}`)
+        return done(null, false, {
+          message: 'Incorrect username.'
+        });
+      }
+      if(!user.validPassword(password)) {
+        console.log(`Failed to validate password = ${password}`)
+        return done(null, false, {
+            message: 'Incorrect password.'
+        });
+      }
+      return done(null, user);
+    });  
+  })
 );
 
 passport.serializeUser(function(user, cb) {
-  cb(null, user.id);
+  console.log(`serializeUser, user ${user} cb= ${cb}`);
+  cb(null, user._id);
 });
 
 passport.deserializeUser(function(id, cb) {
-  User.findOne({ '_id' : id}, function (err, user) {
-    if (err) { return cb(err); }
+  console.log(`deserializeUser, id ${id} cb= ${cb}`);
+  User.findById(id, function(err,user){
+    if(err){
+      return cb(err);
+    }
     cb(null, user);
   });
+  // User.findOne({ '_id' : id}, function (err, user) {
+  //   if (err) { 
+  //     return cb(err); 
+  //   }
+  //   cb(null, user);
+  // });
 });
 
 

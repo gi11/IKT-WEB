@@ -19,17 +19,16 @@ UserSchema.methods.setPassword = function(password){
     this.hash = bcrypt.hashSync(password, saltRounds);
     // .then(function (hash) {
     //     this.hash = hash;
-    // });
+    // });=
     
 };
 
 UserSchema.methods.validPassword =function(password){
-    bcrypt.compare(password, this.hash).then( function (res){
-        if (res)
-            return true;
-        else
-            return false;
-    });
+    result = bcrypt.compareSync(password, this.hash);
+    if (result)
+        return true;
+    else
+        return false;
 };
 
 mongoose.model('User', UserSchema, 'Users');
