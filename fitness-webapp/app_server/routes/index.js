@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const ctrlHome = require('../controllers/HomeController');
 const ctrlAuth = require('../controllers/authenticationController');
+const ctrlWorkout = require('../controllers/WorkoutController');
 let auth = require('connect-ensure-login');
 
 /* GET home page. */
@@ -17,8 +18,10 @@ router.get('/logout', function (req, res){
     res.redirect('/');
 });
 
-router.get('/profile', auth.ensureLoggedIn('/login'), function(req, res){
-    //TODO: CHANGE RENDER:
-    res.render('/profile', {users: [req.user]});
-} )
+router.get('/profile', 
+            auth.ensureLoggedIn('/login'), function(req, res){
+            //TODO: CHANGE RENDER:
+                res.render('/profile', {users: [req.user]});
+            });
+
 module.exports = router;
