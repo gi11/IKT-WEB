@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 const ctrlHome = require('../controllers/HomeController');
 const ctrlAuth = require('../controllers/authenticationController');
-const ctrlWorkout = require('../controllers/WorkoutController');
-let auth = require('connect-ensure-login');
+
+
 
 var passport = require('passport');
 
@@ -17,8 +17,12 @@ router.post('/register', ctrlAuth.register);
 router.get('/login', ctrlAuth.showLogin);
 
 router.post('/login', 
-    passport.authenticate('local', {failureRedirect: '/login'}), 
-    ctrlAuth.login
+    passport.authenticate('local', 
+    {
+        successReturnToOrRedirect: '/',
+        failureRedirect: '/login'
+    }), 
+    // ctrlAuth.login
 );
 // router.post('/login', 
 //     passport.authenticate('local', {failureRedirect: '/login'}),
@@ -32,10 +36,10 @@ router.get('/logout', function (req, res){
     res.redirect('/');
 });
 
-router.get('/profile', 
-            auth.ensureLoggedIn('/login'), function(req, res){
-            //TODO: CHANGE RENDER:
-                res.render('/profile', {users: [req.user]});
-            });
+router.get('/profile', ctrlAuth.ensureLoggedIn(), 
+    function(req, res){
+        res.render('profile', {user: req.user});
+    }
+);
 
 module.exports = router;

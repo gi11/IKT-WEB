@@ -1,8 +1,17 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
-// var passport = require('passport');
 
-module.exports.register= function(req, res) {
+const auth = require('connect-ensure-login');
+
+// module.exports.ensureLoggedIn = function(cb) {
+//     return [
+//         auth.ensureLoggedIn('/login'), 
+//         cb
+//     ]
+// }
+module.exports.ensureLoggedIn = () => {return auth.ensureLoggedIn('/login')};
+
+module.exports.register = function(req, res) {
     if(!req.body.username|| !req.body.password) {
         res.render('userForm', {"errorMessage":"All fields required"});
     }
@@ -29,7 +38,8 @@ module.exports.showLogin = function(req, res, next) {
 }
 
 module.exports.login = function(req, res) {
-    res.redirect('/');
+    console.log(`req session returnto = ${req.session.returnTo}`)
+    res.redirect(req.session.returnTo || '/');
 };
 
 module.exports.logout = function(req, res){

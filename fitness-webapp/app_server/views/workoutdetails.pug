@@ -1,0 +1,11 @@
+extends layout
+include mixins/exerciselist
+block content
+    .card
+        .card-header
+            p 
+                = workout.name
+            span 
+                = workout.description
+        .card-body
+            +ExerciseList(workout.exercises)

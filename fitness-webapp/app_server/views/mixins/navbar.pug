@@ -17,6 +17,8 @@ mixin navbar(loggedin)
                     li.nav-item
                         a.nav-link(href='/register') Register
                 else
+                    li.nav-item.mr-4
+                        a.btn.btn-primary(role="button", href='/workouts') My Workouts
                     li.nav-item.dropdown
                         a.nav-link.dropdown-toggle(id='navbarDropdownMenuLink', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Account
                         .dropdown-menu(aria-labelledby='navbarDropdownMenuLink')

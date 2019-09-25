@@ -1,13 +1,17 @@
 include modals
 mixin WorkoutsList(workouts)
-    ul.list-group
-        each wp in workouts
-            li.list-group-item.d-flex.justify-content-between.align-items-center(href='workouts/' + wp["id"])
-                h5 
-                    = wp["name"]
-                p 
-                    =  wp["description"]
-                //- small Donec id elit non mi porta.
-                span.float-right
-                    +EditModalBtn(wp["id"], "Workout")
-                    +DeleteModalBtn(wp["id"], "Workout")
+    .card
+        .card-body
+            ul.list-group
+                each wp in workouts
+                    a.list-group-item.d-flex.justify-content-between.align-items-center(href='workouts/' + wp["id"])
+                        h5 
+                            = wp["name"]
+                        p 
+                            =  wp["description"]
+                        span.float-right
+                            +EditModalBtn(wp.id, "Workout", wp)
+                            +DeleteModalBtn(wp.id, "Workout")
+        +CreateModalBtn(userid)
+        .card-footer Something
+    
