@@ -1,15 +1,12 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
+const passport = require('passport');
 const auth = require('connect-ensure-login');
 
-// module.exports.ensureLoggedIn = function(cb) {
-//     return [
-//         auth.ensureLoggedIn('/login'), 
-//         cb
-//     ]
-// }
-module.exports.ensureLoggedIn = () => {return auth.ensureLoggedIn('/login')};
+module.exports.ensureLoggedIn = () => {
+    return auth.ensureLoggedIn('/login')
+};
 
 module.exports.register = function(req, res) {
     if(!req.body.username|| !req.body.password) {
@@ -30,20 +27,24 @@ module.exports.register = function(req, res) {
 };
 
 module.exports.showRegister = function(req, res, next) {
-    res.render('userForm', {title : 'Register Now', path: '/register'})
-}
-
-module.exports.showLogin = function(req, res, next) {
-    res.render('userForm', {title : 'Login', path: '/login'})
-}
-
-module.exports.login = function(req, res) {
-    console.log(`req session returnto = ${req.session.returnTo}`)
-    res.redirect(req.session.returnTo || '/');
+    res.render('register', {
+        title: "Register"
+    })
 };
 
+module.exports.showLogin = function(req, res, next) {
+    res.render('login', {
+        title: "Login"
+    })
+};
+
+module.exports.login = passport.authenticate('local', { 
+    successReturnToOrRedirect: '/', 
+    failureRedirect: '/login'
+});
+
 module.exports.logout = function(req, res){
-    req.logout();
+    req.logOut();
     res.redirect('/');
 };
 

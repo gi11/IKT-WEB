@@ -7,46 +7,126 @@ var WorkoutModel = mongoose.model('Workout');
 module.exports = {
     getWorkoutsOfUser: (req, res) => {
         const user = req.user;
-        WorkoutModel.find({ '_userId': user._id}, '_id name description', function(err, workouts) {
-            if(err) return handleError(err);
-            res.render('workouts', {user: user, workouts: workouts });
+        WorkoutModel.find({ '_userId': user._id }, '_id name description', function (err, workouts) {
+            if (err) return handleError(err);
+            res.render('workouts', { 
+                title: "My Workouts",
+                user: user, 
+                workouts: workouts 
+            });
         })
     },
     details: (req, res) => {
         const user = req.user;
         WorkoutModel.findById(req.params.id,
-            function(err, workout) {
-                if(err) return handleError(err);
-                res.render('workoutdetails', {user: user, workout: workout });
+            function (err, workout) {
+                if (err) return handleError(err);
+                res.render('workoutdetails', { 
+                    title: workout.name,
+                    user: user, 
+                    workout: workout 
+                });
             }
         );
     },
     create: (req, res) => {
-        WorkoutModel.create({
+        const newWorkout = {
             _userId: req.user._id,
             name: req.body.name,
             description: req.body.description
-        }, 
-        function(err, created) {
-            if(err) return handleError(err);
-            res.redirect('/workouts')
-        });
+        };
+        WorkoutModel.create(
+            newWorkout,
+            function (err, created) {
+                if (err) return handleError(err);
+                res.redirect('/workouts')
+            });
     },
     delete: (req, res) => {
-        WorkoutModel.findByIdAndDelete(req.params.id, 
-        function(err, deleted) {
-            if(err) return handleError(err);
-            res.redirect('/workouts')
-        });
+        console.log(req.params)
+        WorkoutModel.findByIdAndDelete(
+            req.params.id,
+            function (err, deleted) {
+                if (err) return handleError(err);
+                res.redirect('/workouts')
+            });
     },
     edit: (req, res) => {
-        WorkoutModel.findByIdAndUpdate(req.params.id, {
+        const updatedWorkout = {
             name: req.body.name,
             description: req.body.description
-        },
-        function(err, updated) {
-            if(err) return handleError(err);
-            res.redirect('/workouts');
-        });
+        };
+        WorkoutModel.findByIdAndUpdate(
+            req.params.id,
+            updatedWorkout,
+            function (err, updated) {
+                if (err) return handleError(err);
+                res.redirect('/workouts');
+            }
+        );
+    },
+    createExercise: (req, res) => {
+        const newExercise = {
+            name: req.body.name,
+            description: req.body.description,
+            set: req.body.set,
+            repeat_count: req.body.repeat_count,
+            repeat_type: req.body.repeat_type
+        };
+        WorkoutModel.findByIdAndUpdate(
+            req.params.workout_id,
+            { $push: { exercises: newExercise } },
+            function (err, updated) {
+                if (err) return handleError(err);
+                res.redirect(`/workouts/${req.params.workout_id}`)
+            }
+        );
+    },
+    deleteExercise: (req, res) => {
+        console.log("deleteExercise")
+        console.log(req.params)
+        console.log(req.body)
+        WorkoutModel.findByIdAndUpdate(
+            req.params.workout_id,
+            { $pull: { exercises: {_id: req.params.id} } },
+            function (err, deleted) {
+                if (err) return handleError(err);
+                res.redirect(`/workouts/${req.params.workout_id}`)
+            }
+        );
+    },
+    editExercise: (req, res) => {
+        const updatedExercise = {
+            // _id: req.params.id,
+            name: req.body.name,
+            description: req.body.description,
+            set: req.body.set,
+            repeat_count: req.body.repeat_count,
+            repeat_type: req.body.repeat_type
+        };
+        const selector = "exercises."+req.params.id
+        WorkoutModel.updateOne(
+            {
+                "_id": req.params.workout_id,
+                "exercises._id": req.params.id
+            },
+            { $set: { 
+                "exercises.$.name" : req.body.name,
+                "exercises.$.description": req.body.description,
+                "exercises.$.set": req.body.set,
+                "exercises.$.repeat_count": req.body.repeat_count,
+                "exercises.$.repeat_type": req.body.repeat_type
+                } 
+            },
+            function (err, updated) {
+                if (err) return handleError(err);
+                res.redirect(`/workouts/${req.params.workout_id}`)
+            }
+        );
     }
+}
+
+function handleError(err){
+    console.log("Error: ")
+    console.log(err)
 }

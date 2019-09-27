@@ -1,27 +1,18 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 const AuthCtrl = require('../controllers/authenticationController')
 const WorkoutCtrl = require('../controllers/WorkoutController');
 
 router.get('/', AuthCtrl.ensureLoggedIn(), WorkoutCtrl.getWorkoutsOfUser);
 
-router.post('/create', AuthCtrl.ensureLoggedIn(), 
-    WorkoutCtrl.create
-);
-router.post('/delete/:id', AuthCtrl.ensureLoggedIn(), 
-    WorkoutCtrl.delete
-);
-router.post('/edit/:id', AuthCtrl.ensureLoggedIn(), 
-    WorkoutCtrl.edit
-);
+router.get('/:id', AuthCtrl.ensureLoggedIn(), WorkoutCtrl.details);
+router.post('/create', AuthCtrl.ensureLoggedIn(), WorkoutCtrl.create );
+router.post('/delete/:id', AuthCtrl.ensureLoggedIn(), WorkoutCtrl.delete );
+router.post('/edit/:id', AuthCtrl.ensureLoggedIn(), WorkoutCtrl.edit );
 
-router.get('/:id', AuthCtrl.ensureLoggedIn(), 
-    WorkoutCtrl.details
-);
-
-router.post('/:wpid/exercises/create', AuthCtrl.ensureLoggedIn(), WorkoutCtrl.create);
-router.post('/:wpid/exercises/delete/:id', AuthCtrl.ensureLoggedIn(), WorkoutCtrl.delete);
-router.post('/:wpid/exercises/edit/:id', AuthCtrl.ensureLoggedIn(), WorkoutCtrl.edit);
+router.post('/:workout_id/exercises/create', AuthCtrl.ensureLoggedIn(), WorkoutCtrl.createExercise);
+router.post('/:workout_id/exercises/delete/:id', AuthCtrl.ensureLoggedIn(), WorkoutCtrl.deleteExercise);
+router.post('/:workout_id/exercises/edit/:id', AuthCtrl.ensureLoggedIn(), WorkoutCtrl.editExercise);
 
 module.exports = router;

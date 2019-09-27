@@ -1,4 +1,4 @@
 extends layout
-include mixins/workoutslist
+include workout/workoutslist
 block content
-    +WorkoutsList(workouts)
+    +WorkoutsList(workouts, user.id)

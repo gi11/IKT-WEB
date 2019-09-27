@@ -1,0 +1,203 @@
+
+mixin DeleteWorkoutBtn(id)
+    - const target_name = 'DeleteWorkout_' + id
+    - const action_url = `/workouts/delete/${id}`
+    //Button
+    button.btn.btn-danger(type='button', data-toggle='modal', data-target='#' + target_name)
+        | Delete
+    // Modal
+    .modal.fade(id=target_name, tabindex='-1', role='dialog')
+        .modal-dialog.modal-dialog-centered(role='document')
+            .modal-content
+                .modal-header
+                    h5 Delete Workout
+                    button.close(type='button', data-dismiss='modal')
+                        span(aria-hidden='true') ×
+                .modal-body Are you sure you want to delete this Workout?
+                .modal-footer
+                    button.btn.btn-secondary(type='button', data-dismiss='modal') Cancel
+                    form(action=action_url method="post")
+                        button.btn.btn-danger(type='submit') Delete Workout
+
+mixin DeleteExerciseBtn(parent_id, id)
+    - const target_name = 'DeleteExercise_' + id
+    - const action_url = `/workouts/${parent_id}/exercises/delete/${id}`
+    //Button
+    button.btn.btn-danger(type='button', data-toggle='modal', data-target='#' + target_name)
+        | Delete
+    // Modal
+    .modal.fade(id=target_name, tabindex='-1', role='dialog')
+        .modal-dialog.modal-dialog-centered(role='document')
+            .modal-content
+                .modal-header
+                    h5 Delete Exercise
+                    button.close(type='button', data-dismiss='modal')
+                        span(aria-hidden='true') ×
+                .modal-body Are you sure you want to delete this Exercise?
+                .modal-footer
+                    button.btn.btn-secondary(type='button', data-dismiss='modal') Cancel
+                    form(action=action_url, method="post")
+                        button.btn.btn-danger(type='submit') Delete Exercise
+
+mixin CreateWorkoutBtn(parent_id)
+    - const target_name = 'CreateWorkout_' + parent_id
+    - const action_url = '/workouts/create'
+    //Button
+    button.btn.btn-primary(type='button', data-toggle='modal', data-target='#' + target_name)
+        | Create New Workout
+    // Modal
+    .modal.fade(id=target_name, tabindex='-1', role='dialog')
+        .modal-dialog.modal-dialog-centered(role='document')
+            .modal-content
+                form(action=action_url, method="post")
+                    .modal-header
+                        h5 Create new Workout
+                        button.close(type='button', data-dismiss='modal', aria-label='Close')
+                            span(aria-hidden='true') ×
+                    .modal-body
+                        .form-group
+                            label(for="name") Name:
+                            input.form-control(type='text' placeholder="Workout Name" name='name')
+                        .form-group
+                            label(for='description') Description:
+                            input.form-control(type='text' placeholder='Description of workout program' name='description')
+                    .modal-footer
+                        button.btn.btn-secondary(type='button', data-dismiss='modal') Cancel
+                        button.btn.btn-primary(type='submit') Create New Workout
+
+mixin CreateExerciseBtn(parent_id)
+    - const target_name = 'CreateExercise_' + parent_id
+    - const action_url = `/workouts/${parent_id}/exercises/create/`
+    //Button
+    button.btn.btn-primary(type='button', data-toggle='modal', data-target='#' + target_name)
+        | Create New Exercise
+    // Modal
+    .modal.fade(id=target_name, tabindex='-1', role='dialog')
+        .modal-dialog.modal-dialog-centered(role='document')
+            .modal-content
+                form(action=action_url method="post")
+                    .modal-header
+                        h5 Create New Exercise
+                        button.close(type='button', data-dismiss='modal', aria-label='Close')
+                            span(aria-hidden='true') ×
+                    .modal-body
+                        .form-group
+                            label(for="name") Name:
+                            input.form-control(type='text' placeholder="Exercise Name" name='name')
+                        .form-group
+                            label(for='description') Description:
+                            input.form-control(type='text' placeholder='Description of exercise' name='description')
+                        .form-group
+                            label(for='set') Set:
+                            input.form-control(type='number' min="1" max="100" name='set', value=1)
+                        .form-group
+                            label(for='repeat_count') Repeat:
+                            input.form-control(type='number' min="1" max="100" name='repeat_count')
+                        .form-group
+                            label(for='repeat_type') Repeat for:
+                            select(name='repeat_type')
+                                option(value='times') Times
+                                option(value='minutes') Minutes
+                                option(value='seconds') Seconds
+                    .modal-footer
+                        button.btn.btn-secondary(type='button', data-dismiss='modal') Cancel
+                        button.btn.btn-primary(type='submit') Create New Exercise
+
+//- mixin InputFields(entity)
+//-     case entity.toLowerCase()
+//-         when "workout"
+//-             .form-group
+//-                 label(for="name") Name:
+//-                 input#username.form-control(type='text' placeholder="Workout Name" name='name')
+//-             .form-group
+//-                 label(for='description') Description:
+//-                 input#password.form-control(type='text' placeholder='Description of workout program' name='description')
+//-         when "exercise"
+//-             .form-group
+//-                 label(for="name") Name:
+//-                 input#username.form-control(type='text' placeholder="Workout Name" name='name')
+//-             .form-group
+//-                 label(for='description') Description:
+//-                 input#password.form-control(type='text' placeholder='Description of workout program' name='description')
+
+mixin EditWorkoutBtn(workout)
+    - const id = workout.id
+    - const target_name = 'EditWorkout_' + id
+    - const action_url = `/workouts/edit/${id}`
+    //Button
+    button.btn.btn-primary(type='button', data-toggle='modal', data-target='#'+target_name)
+        | Edit
+    // Modal
+    .modal.fade(id=target_name, tabindex='-1', role='dialog')
+        .modal-dialog.modal-dialog-centered(role='document')
+            .modal-content
+                form(action=action_url, method="post")
+                    .modal-header
+                        h5 Edit Workout
+                        button.close(type='button', data-dismiss='modal', aria-label='Close')
+                            span(aria-hidden='true') ×
+                    .modal-body
+                            .form-group
+                                label(for="name") Name:
+                                input#username.form-control(type='text', placeholder="Workout Name", name='name', value=workout.name)
+                            .form-group
+                                label(for='description') Description:
+                                input#password.form-control(type='text', placeholder='Description of workout program', name='description', value=workout.description)
+                    .modal-footer
+                        button.btn.btn-secondary(type='button', data-dismiss='modal') Cancel
+                        button.btn.btn-primary(type='submit') Save Changes
+
+mixin EditExerciseBtn(workout_id, exercise)
+    - const id = exercise.id
+    - const target_name = 'EditExercise_' + id
+    - const action_url = `/workouts/${workout_id}/exercises/edit/${id}`
+    //Button
+    button.btn.btn-primary(type='button', data-toggle='modal', data-target='#'+target_name)
+        | Edit
+    // Modal
+    .modal.fade(id=target_name, tabindex='-1', role='dialog')
+        .modal-dialog.modal-dialog-centered(role='document')
+            .modal-content
+                form(action=action_url, method="post")
+                    .modal-header
+                        h5 Edit Workout
+                        button.close(type='button', data-dismiss='modal', aria-label='Close')
+                            span(aria-hidden='true') ×
+                    .modal-body
+                        .form-group
+                            label(for="name") Name:
+                            input.form-control(
+                                type='text' 
+                                placeholder="Workout Name" 
+                                name='name'
+                                value=exercise.name
+                            )
+                        .form-group
+                            label(for='description') Description:
+                            input.form-control(
+                                type='text' 
+                                placeholder='Description of workout program' 
+                                name='description'
+                                value=exercise.description
+                            )
+                        .form-group
+                            label(for='set') Set:
+                            input.form-control(
+                                type='number' min="1" max="100" name='set'
+                                value=exercise.set
+                            )
+                        .form-group
+                            label(for='repeat_count') Repeat:
+                            input.form-control(
+                                type='number' min="1" max="100" name='repeat_count'
+                                value=exercise.repeat_count
+                            )
+                        .form-group
+                            //- label(for='repeat_type') Repeat for:
+                            select(name='repeat_type')
+                                option(value='times' selected=exercise.repeat_type=='times') Times
+                                option(value='minutes' selected=exercise.repeat_type=='minutes') Minutes
+                                option(value='seconds' selected=exercise.repeat_type=='seconds') Seconds
+                    .modal-footer
+                        button.btn.btn-secondary(type='button', data-dismiss='modal') Cancel
+                        button.btn.btn-primary(type='submit') Save Changes

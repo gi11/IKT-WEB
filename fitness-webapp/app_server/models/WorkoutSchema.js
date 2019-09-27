@@ -4,8 +4,9 @@ const Schema = mongoose.Schema;
 var ExerciseSchema = new Schema({
     name: {type : String, required : true},
     description: String,
-    set: {reuired : true, type : String},
-    reps: {reuired : true, type : String}
+    set: {reuired : true, type : Number},
+    repeat_count: {reuired : true, type : Number},
+    repeat_type: {reuired : true, type : String}
 });
 
 //Workout Schema definition

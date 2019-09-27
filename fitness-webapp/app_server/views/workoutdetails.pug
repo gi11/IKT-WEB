@@ -1,5 +1,5 @@
 extends layout
-include mixins/exerciselist
+include workout/exerciselist
 block content
     .card
         .card-header
@@ -8,4 +8,4 @@ block content
             span 
                 = workout.description
         .card-body
-            +ExerciseList(workout.exercises)
+            +ExerciseList(workout.exercises, workout.id)

@@ -1,0 +1,18 @@
+include modals
+mixin ExerciseList(exercises, workout_id)
+    ul.list-group
+        each ex in exercises
+            li.list-group-item.d-flex.justify-content-between.align-items-center
+                h5 
+                    = ex.name
+                p 
+                    = ex.description
+                p 
+                    = ex.set
+                p 
+                    = ex.repeat_count + " " + ex.repeat_type
+                span.float-right
+                    +EditExerciseBtn(workout_id, ex)
+                    +DeleteExerciseBtn(workout_id, ex._id)
+        +CreateExerciseBtn(workout_id)
+        .card-footer Something

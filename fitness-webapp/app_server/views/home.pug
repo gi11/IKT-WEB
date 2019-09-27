@@ -1,11 +1,12 @@
 extends layout
 
 block content
-  - if (!user)
-    p Not Logged in
-  - else
-    p Logged In
-
+  p This is the home page
+  //- - if (!user)
+  //-   p Not Logged in
+  //- - else
+  //-   p Logged In
+  
   //-   p Welcome! Please <a href="/login">log in</a> or <a href="/register">register</a>.
   //- else 
   //-   p Hello, #{user.username} View your <a href="/profile">profile</a>

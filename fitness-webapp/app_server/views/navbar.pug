@@ -1,4 +1,4 @@
-mixin navbar(loggedin)
+mixin NavigationBar(user)
     nav.navbar.navbar-expand-lg.navbar-light.bg-light
         a.navbar-brand(href='#') Fitness App
         button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
@@ -11,12 +11,14 @@ mixin navbar(loggedin)
                 li.nav-item
                     a.nav-link(href='/about') About
             ul.navbar-nav.float-right
-                if (!loggedin)
+                if (!user)
                     li.nav-item
                         a.nav-link(href='/login') Login
                     li.nav-item
                         a.nav-link(href='/register') Register
                 else
+                    li.mr-7
+                        = "Hello " + user.username + "!"
                     li.nav-item.mr-4
                         a.btn.btn-primary(role="button", href='/workouts') My Workouts
                     li.nav-item.dropdown

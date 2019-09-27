@@ -15,8 +15,7 @@ require('./app_server/models/db');
 require('./config/passport');
 
 // Laod routers
-var indexRouter = require('./app_server/routes/index');
-var usersRouter = require('./app_server/routes/users');
+var rootRouter = require('./app_server/routes/root');
 var workoutRouter = require('./app_server/routes/workouts');
 
 // Create express server instance
@@ -33,16 +32,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js'));
-app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+app.use(require('express-session')({ secret: 'secret string', resave: false, saveUninitialized: false }));
 
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/', rootRouter);
 app.use('/workouts', workoutRouter);
-
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

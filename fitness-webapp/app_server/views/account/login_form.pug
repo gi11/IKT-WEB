@@ -1,13 +1,9 @@
-extends layout
-
-block content
-    h1.feature-title=title
-
-    form(action=path method="post")
+mixin LoginForm(action_name, action_url)
+    form(action=action_url, method="post")
         .form-group
             label(for="username") Username:
             input#username.form-control(type='text' placeholder="enter a username" name='username')
         .form-group
             label(for='password') Password:
             input#password.form-control(type='password' placeholder='****' name='password')
-        button.btn.btn-secondary.btn-block(type='submit')=title
+        button.btn.btn-secondary.btn-block(type='submit')=action_name
