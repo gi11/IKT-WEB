@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const AuthCtrl = require('../controllers/authenticationController')
+const AuthCtrl = require('../controllers/AuthenticationController')
 const WorkoutCtrl = require('../controllers/WorkoutController');
 
-router.get('/', AuthCtrl.ensureLoggedIn(), WorkoutCtrl.getWorkoutsOfUser);
-
+router.get('/', AuthCtrl.ensureLoggedIn(), WorkoutCtrl.overview);
 router.get('/:id', AuthCtrl.ensureLoggedIn(), WorkoutCtrl.details);
 router.post('/create', AuthCtrl.ensureLoggedIn(), WorkoutCtrl.create );
 router.post('/delete/:id', AuthCtrl.ensureLoggedIn(), WorkoutCtrl.delete );

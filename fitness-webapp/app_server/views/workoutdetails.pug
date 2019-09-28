@@ -1,11 +1,20 @@
 extends layout
 include workout/exerciselist
 block content
+    a.btn.btn-info.mb-2(role='button' href='/workouts') Back to overview
     .card
-        .card-header
-            p 
-                = workout.name
-            span 
-                = workout.description
+        .card-header.align-top
+            .d-inline-block
+                .badge.badge-secondary Name:
+                h2
+                    = workout.name
+            .float-right
+                +EditWorkoutBtn(workout)
+                +DeleteWorkoutBtn(workout.id)
+
         .card-body
+            .badge.badge-secondary Description:
+            p 
+                = workout.description
+            .badge.badge-secondary Exercises:    
             +ExerciseList(workout.exercises, workout.id)

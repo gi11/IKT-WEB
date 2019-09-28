@@ -5,12 +5,12 @@ var WorkoutModel = mongoose.model('Workout');
 
 // Get all workout programs of user with id
 module.exports = {
-    getWorkoutsOfUser: (req, res) => {
+    overview: (req, res) => {
         const user = req.user;
         WorkoutModel.find({ '_userId': user._id }, '_id name description', function (err, workouts) {
             if (err) return handleError(err);
             res.render('workouts', { 
-                title: "My Workouts",
+                title: "Workouts Overview",
                 user: user, 
                 workouts: workouts 
             });
@@ -22,7 +22,7 @@ module.exports = {
             function (err, workout) {
                 if (err) return handleError(err);
                 res.render('workoutdetails', { 
-                    title: workout.name,
+                    title: "Workout Details",
                     user: user, 
                     workout: workout 
                 });
@@ -61,7 +61,7 @@ module.exports = {
             updatedWorkout,
             function (err, updated) {
                 if (err) return handleError(err);
-                res.redirect('/workouts');
+                res.redirect('/workouts/' + req.params.id);
             }
         );
     },

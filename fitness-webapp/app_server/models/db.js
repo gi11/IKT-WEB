@@ -2,6 +2,7 @@ require('./WorkoutSchema')
 require('./UserSchema')
 var mongoose = require("mongoose");
 var dbURI ='mongodb://localhost/fitnessDB';
+// var dbURI = process.env.MONGODB_URI;
 
 mongoose.connect(dbURI);
 

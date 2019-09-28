@@ -3,7 +3,7 @@ mixin DeleteWorkoutBtn(id)
     - const target_name = 'DeleteWorkout_' + id
     - const action_url = `/workouts/delete/${id}`
     //Button
-    button.btn.btn-danger(type='button', data-toggle='modal', data-target='#' + target_name)
+    button.btn.btn-danger.mr-2(type='button', data-toggle='modal', data-target='#' + target_name)
         | Delete
     // Modal
     .modal.fade(id=target_name, tabindex='-1', role='dialog')
@@ -23,7 +23,7 @@ mixin DeleteExerciseBtn(parent_id, id)
     - const target_name = 'DeleteExercise_' + id
     - const action_url = `/workouts/${parent_id}/exercises/delete/${id}`
     //Button
-    button.btn.btn-danger(type='button', data-toggle='modal', data-target='#' + target_name)
+    button.btn.btn-danger.mr-2(type='button', data-toggle='modal', data-target='#' + target_name)
         | Delete
     // Modal
     .modal.fade(id=target_name, tabindex='-1', role='dialog')
@@ -43,7 +43,7 @@ mixin CreateWorkoutBtn(parent_id)
     - const target_name = 'CreateWorkout_' + parent_id
     - const action_url = '/workouts/create'
     //Button
-    button.btn.btn-primary(type='button', data-toggle='modal', data-target='#' + target_name)
+    button.btn.btn-primary.m-2(type='button', data-toggle='modal', data-target='#' + target_name)
         | Create New Workout
     // Modal
     .modal.fade(id=target_name, tabindex='-1', role='dialog')
@@ -69,8 +69,8 @@ mixin CreateExerciseBtn(parent_id)
     - const target_name = 'CreateExercise_' + parent_id
     - const action_url = `/workouts/${parent_id}/exercises/create/`
     //Button
-    button.btn.btn-primary(type='button', data-toggle='modal', data-target='#' + target_name)
-        | Create New Exercise
+    button.btn.btn-primary.m-2(type='button', data-toggle='modal', data-target='#' + target_name)
+        | Add exercise to workout
     // Modal
     .modal.fade(id=target_name, tabindex='-1', role='dialog')
         .modal-dialog.modal-dialog-centered(role='document')
@@ -103,29 +103,12 @@ mixin CreateExerciseBtn(parent_id)
                         button.btn.btn-secondary(type='button', data-dismiss='modal') Cancel
                         button.btn.btn-primary(type='submit') Create New Exercise
 
-//- mixin InputFields(entity)
-//-     case entity.toLowerCase()
-//-         when "workout"
-//-             .form-group
-//-                 label(for="name") Name:
-//-                 input#username.form-control(type='text' placeholder="Workout Name" name='name')
-//-             .form-group
-//-                 label(for='description') Description:
-//-                 input#password.form-control(type='text' placeholder='Description of workout program' name='description')
-//-         when "exercise"
-//-             .form-group
-//-                 label(for="name") Name:
-//-                 input#username.form-control(type='text' placeholder="Workout Name" name='name')
-//-             .form-group
-//-                 label(for='description') Description:
-//-                 input#password.form-control(type='text' placeholder='Description of workout program' name='description')
-
 mixin EditWorkoutBtn(workout)
     - const id = workout.id
     - const target_name = 'EditWorkout_' + id
     - const action_url = `/workouts/edit/${id}`
     //Button
-    button.btn.btn-primary(type='button', data-toggle='modal', data-target='#'+target_name)
+    button.btn.btn-primary.mr-2(type='button', data-toggle='modal', data-target='#'+target_name)
         | Edit
     // Modal
     .modal.fade(id=target_name, tabindex='-1', role='dialog')
@@ -152,7 +135,7 @@ mixin EditExerciseBtn(workout_id, exercise)
     - const target_name = 'EditExercise_' + id
     - const action_url = `/workouts/${workout_id}/exercises/edit/${id}`
     //Button
-    button.btn.btn-primary(type='button', data-toggle='modal', data-target='#'+target_name)
+    button.btn.btn-primary.mr-2(type='button', data-toggle='modal', data-target='#'+target_name)
         | Edit
     // Modal
     .modal.fade(id=target_name, tabindex='-1', role='dialog')
