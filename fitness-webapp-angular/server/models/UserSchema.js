@@ -44,7 +44,7 @@ UserSchema.methods.generateJwt = function () {
     }, process.env.JWT_SECRET);
 
     console.log(`token is ='${token}'`);
-    // return token;
+    return token;
 };
 
 mongoose.model('User', UserSchema, 'Users');

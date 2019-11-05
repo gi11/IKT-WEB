@@ -13,6 +13,24 @@ router.post('/test', auth, function (req, res) {
 
 });
 
+router.post('/register', function(req, res) {
+  if(!req.body.username|| !req.body.password) {
+      res.render('userForm', {"errorMessage":"All fields required"});
+  }
+  const user= new User();
+  user.username= req.body.username;
+  user.setPassword(req.body.password);
+  user.save(function(err) {
+      if(err) {
+          req.flash('error',`Failed to create user account because:${error.message}.`);
+          res.render('/');
+      } 
+      else{
+        res.status(200)
+        .json({'message': 'success'});
+      }
+  });
+})
 
 router.post('/login', function (req, res, next)  {
     const {username, password } = req.body
@@ -34,8 +52,10 @@ router.post('/login', function (req, res, next)  {
             message: 'Incorrect password.'
         });
       }
-      user.generateJwt();
-      res.status(200);
+      token = user.generateJwt();
+      res.status(200)
+      .json({'token': token});
+
     });  
   });
 
