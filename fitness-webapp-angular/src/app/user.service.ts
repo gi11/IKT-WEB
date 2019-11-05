@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http'
-import { Observable, of } from 'rxjs';
 import {AuthResponse} from './auth-response';
 import { User } from './user';
 
@@ -53,7 +52,7 @@ export class UserService {
         // }
 
 public login(){
-    
+
 }
 
 public logout(){
