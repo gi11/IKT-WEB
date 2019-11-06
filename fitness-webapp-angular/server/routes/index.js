@@ -13,17 +13,28 @@ router.post('/test', auth, function (req, res) {
 
 });
 
+router.get('/test', auth, function (req, res) {
+  res.status(200)
+  .json({'message': 'success'});
+
+});
+
 router.post('/register', function(req, res) {
+  console.log(req.body);
   if(!req.body.username|| !req.body.password) {
-      res.render('userForm', {"errorMessage":"All fields required"});
+      console.log("All fields required");
+      res.status(504)
+      .json({"errorMessage":"All fields required"});
   }
   const user= new User();
   user.username= req.body.username;
   user.setPassword(req.body.password);
+  console.log(user);
   user.save(function(err) {
       if(err) {
-          req.flash('error',`Failed to create user account because:${error.message}.`);
-          res.render('/');
+        console.log(`Failed to create user account because:${err.message}.`);
+        res.status(504)
+        .json({"messageError": `Failed to create user account because:${err.message}.`});
       } 
       else{
         res.status(200)
