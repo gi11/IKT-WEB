@@ -15,11 +15,15 @@ export class NavigationBarComponent implements OnInit {
   }
 
   onLogin(){
-
+    
   }
 
   onLogout(){
     this.authService.logout()
+  }
+
+  isLoggedIn(){
+    return this.authService.isLoggedIn();
   }
 
 }

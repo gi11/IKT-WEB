@@ -47,6 +47,16 @@ const routes: Routes = [
   {
     path: 'login', pathMatch: 'full',
     component: UserFormComponent,
+    data: {
+      type: "login"
+    }
+  },
+  {
+    path: 'register', pathMatch: 'full',
+    component: UserFormComponent,
+    data: {
+      type: "register"
+    }
   }
   // {
   //   path: "blank",
