@@ -38,7 +38,7 @@ UserSchema.methods.generateJwt = function () {
     expire.setDate(expire.getDate() + 7000);
 
     const token = jwt.sign({
-        id_: this.id_,
+        _id: this._id,
         username: this.username,
         exp: parseInt(expire.getTime() / 1000),
     }, process.env.JWT_SECRET);

@@ -10,6 +10,7 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) { }
   private baseUrl = 'http://localhost:3000';
+  redirectUrl = this.baseUrl;
 
     public register(user: User){
         const url = `${this.baseUrl}/api/register`;
@@ -31,30 +32,12 @@ export class AuthenticationService {
         });
     }
 
-        // public register(user: User) {
-        //     const url = `${this.baseUrl}/createUser`;
-        //     this.http.post(url, user).subscribe((data) => {
-        //         this.saveToken(data.token);
-        //         this.router.navigate(['/']);
-
-        //         return true;
-        //     }, 
-        //     (err: HttpErrorResponse) =>{
-        //         if(err.error instanceof Error) {
-        //             // A client-side or netwoek error occured. Handle it accordingly.
-        //             console.log('An error occurred', err.error.message);
-        //         } else {
-        //             //The backend return an unsuccessful response code.
-        //             //The response body may contain clue as to what went wrong,
-        //             console.log(`Back end returned code ${err.status} body was: ${err.error}`);
-        //         }
-        //     }
-        // }
-
     public login(user: User){
         const url = `${this.baseUrl}/api/login`;
         this.http.post<AuthResponse>(url, user).subscribe(data => {
             this.saveToken(data.token);
+            console.log('This is the token in localstorage: ');
+            console.log(this.getToken());
             return true;
         },
         // Errors will call this callback instead:
@@ -105,7 +88,7 @@ export class AuthenticationService {
         window.localStorage['fitness-user-token'] = token;
     }
 
-    private getToken() {
+    public getToken() {
         if (window.localStorage['fitness-user-token']){
             return window.localStorage['fitness-user-token'];
         } else{
