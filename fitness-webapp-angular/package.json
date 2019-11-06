@@ -5,12 +5,15 @@
   "dependencies": {
     "@angular-devkit/build-angular": "~0.13.0",
     "@angular/animations": "~8.0.2",
+    "@angular/cdk": "~8.2.3",
     "@angular/cli": "~7.3.5",
     "@angular/common": "~8.0.2",
     "@angular/compiler": "~8.0.2",
     "@angular/compiler-cli": "~8.0.2",
     "@angular/core": "~8.0.2",
+    "@angular/flex-layout": "^8.0.0-beta.27",
     "@angular/forms": "~8.0.2",
+    "@angular/material": "^8.2.3",
     "@angular/platform-browser": "~8.0.2",
     "@angular/platform-browser-dynamic": "~8.0.2",
     "@angular/router": "~8.0.2",
@@ -19,6 +22,7 @@
     "bcrypt": "^3.0.6",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.3.1",
+    "compression": "^1.7.4",
     "cookie-parser": "^1.4.3",
     "core-js": "^2.5.4",
     "debug": "~4.1.1",
@@ -53,7 +57,7 @@
     "nodemon": "^1.18.10"
   },
   "scripts": {
-    "start": "concurrently \"yarn start-frontend || npm run start-frontend\" \"yarn start-backend || npm run start-backend\"",
+    "start": "concurrently \"npm run start-frontend\" \"npm run start-backend\"",
     "start-frontend": "ng serve --port=3000 --o --proxy-config proxy.config.json",
     "ng": "ng",
     "build": "node ./buildScript",

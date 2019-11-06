@@ -4,12 +4,19 @@ const express = require("express");
 const path = require("path");
 // const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-require('./models/db');
+const compression = require("compression");
+
+//Database
+var mongoose = require("mongoose");
+require('./db');
 
 const indexRouter = require("./routes/index");
+const workoutsRouter = require("./routes/WorkoutRouter");
+const usersRouter = require("./routes/UserRouter");
 
 const app = express();
 
+app.use(compression());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -17,6 +24,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.resolve(__dirname, "build")));
 
 app.use("/api", indexRouter);
+app.use("/api/workouts", workoutsRouter);
+// app.use("/api/users", usersRouter);
+
+
 app.get("*", (req, res) => {
   res.sendFile("build/index.html", { root: __dirname });
 });

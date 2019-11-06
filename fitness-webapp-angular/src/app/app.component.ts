@@ -6,5 +6,5 @@
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'fitness_webapp_angular';
+  title = 'Fitness Webapp';
 }
