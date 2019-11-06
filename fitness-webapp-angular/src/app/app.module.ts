@@ -7,9 +7,6 @@ import { AuthInterceptor } from'./auth.interceptor';
 
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
-// import { BlankModule } from "./app-shell/blank/blank.module";
-// import { NavBarComponent } from "./app-shell/nav-bar/nav-bar.component";
-// import { FooterComponent } from "./app-shell/footer/footer.component";
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import {
@@ -38,13 +35,12 @@ import { WorkoutEditComponent } from "./workout/workout-edit/workout-edit.compon
 import { WorkoutDetailsComponent } from "./workout/workout-details/workout-details.component";
 import { LayoutComponent } from './layout/layout.component';
 import { UserFormComponent } from './user-form/user-form.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    // NavBarComponent,
-    // FooterComponent,
     NavigationBarComponent,
     WorkoutEditComponent,
     WorkoutListComponent,
@@ -53,13 +49,13 @@ import { UserFormComponent } from './user-form/user-form.component';
     WorkoutEditComponent,
     WorkoutListComponent,
     LayoutComponent,
-    UserFormComponent
+    UserFormComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    // BlankModule,
     FlexLayoutModule,
     ReactiveFormsModule,
     

@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthenticationService } from '../authentication.service'
 
 @Component({
-  selector: 'app-user-form',
+  selector: 'fitapp-user-form',
   templateUrl: './user-form.component.html',
   styleUrls: [],
 })
@@ -16,9 +16,10 @@ export class UserFormComponent implements OnInit {
             password: new FormControl('****'),
         });
      }
-    
+     
      onSubmit() {
         this.authService.login(this.userFormModel.value);
+        // this.authService.register(this.userFormModel.value);
      }
 
      ngOnInit() {

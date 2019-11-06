@@ -10,7 +10,7 @@ const compression = require("compression");
 var mongoose = require("mongoose");
 require('./db');
 
-const indexRouter = require("./routes/index");
+const authRouter = require("./routes/AuthRouter");
 const workoutsRouter = require("./routes/WorkoutRouter");
 const usersRouter = require("./routes/UserRouter");
 
@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 // app.use(cookieParser());
 app.use(express.static(path.resolve(__dirname, "build")));
 
-app.use("/api", indexRouter);
+app.use("/api", authRouter);
 app.use("/api/workouts", workoutsRouter);
 // app.use("/api/users", usersRouter);
 

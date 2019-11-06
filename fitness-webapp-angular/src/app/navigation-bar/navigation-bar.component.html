@@ -8,6 +8,10 @@
     <div>
       <a mat-button [routerLink]="'/home'"> Home </a>
       <a mat-button [routerLink]="'/workouts'"> All Workouts </a>
+      <a mat-button [routerLink]="'/login'"> Login </a>
+      <a mat-button  (click)="onLogout()"> Logout </a>
+      <a mat-button [routerLink]="'/profile'"> Profile </a>
+
     </div>
   </mat-toolbar-row>
 </mat-toolbar>

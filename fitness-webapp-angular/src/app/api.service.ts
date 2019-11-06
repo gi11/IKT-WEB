@@ -19,7 +19,7 @@ export class ApiService {
   }
 
   public updateWorkout(workout: Workout) {
-    return this.httpClient.put(`${this.apiURL}/workouts/${workout.id}`, workout);
+    return this.httpClient.put(`${this.apiURL}/workouts/${workout._id}`, workout);
   }
 
   public deleteWorkout(id: string) {

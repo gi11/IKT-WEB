@@ -1,11 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard'
-import { BlankComponent } from './app-shell/blank/blank.component';
+
 
 import { WorkoutListComponent } from "./workout/workout-list/workout-list.component";
 import { WorkoutDetailsComponent } from "./workout/workout-details/workout-details.component";
 import { HomeComponent } from "./home/home.component";
+import { UserFormComponent } from './user-form/user-form.component';
+import { ProfileComponent } from './profile/profile.component';
+
+
 const routes: Routes = [
   {
     path: "",
@@ -36,10 +40,13 @@ const routes: Routes = [
     }
   },
   {
-    path: 'api/test', pathMatch: 'full',
-    component: BlankComponent,
+    path: 'profile', pathMatch: 'full',
+    component: ProfileComponent,
     canActivate: [AuthGuard],
-
+  },
+  {
+    path: 'login', pathMatch: 'full',
+    component: UserFormComponent,
   }
   // {
   //   path: "blank",

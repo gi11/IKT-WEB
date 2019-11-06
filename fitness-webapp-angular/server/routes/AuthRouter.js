@@ -19,6 +19,10 @@ router.get('/test', auth, function (req, res) {
 
 });
 
+router.get('/q', function (req, res) {
+  res.status(200).json({'message': 'success'});
+});
+
 router.post('/register', function(req, res) {
   console.log(req.body);
   if(!req.body.username|| !req.body.password) {
