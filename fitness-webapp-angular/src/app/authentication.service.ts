@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router'
 import {HttpClient, HttpErrorResponse} from '@angular/common/http'
 import {AuthResponse} from './auth-response';
 import { User } from './user';
@@ -8,15 +9,18 @@ import { User } from './user';
 })
 export class AuthenticationService {
 
-  constructor(private http: HttpClient) { }
-  private baseUrl = 'http://localhost:3000';
-  redirectUrl = this.baseUrl;
+    isLoggedIn = false;
+    @Output () change: EventEmitter<boolean> = new EventEmitter();  
+
+    constructor(private http: HttpClient, private router: Router) { }
+    private baseUrl = 'http://localhost:3000';
+    redirectUrl = this.baseUrl;
 
     public register(user: User){
         const url = `${this.baseUrl}/api/register`;
         this.http.post<AuthResponse>(url, user).subscribe(data => {
             this.saveToken(data.token);
-            return true;
+            this.router.navigate(['/api/login']);
         },
         // Errors will call this callback instead:
         (err: HttpErrorResponse) =>{
@@ -38,6 +42,9 @@ export class AuthenticationService {
             this.saveToken(data.token);
             console.log('This is the token in localstorage: ');
             console.log(this.getToken());
+            this.isLoggedIn = true;
+            this.change.emit(this.isLoggedIn);
+            this.router.navigate([''])
             return true;
         },
         // Errors will call this callback instead:
@@ -54,14 +61,18 @@ export class AuthenticationService {
         });
     }
 
-    public logout(){''
+    public logout(){
         const token = this.getToken();
         if(token){
             window.localStorage.removeItem('fitness-user-token');
-        } 
+            this.isLoggedIn = false;
+            this.change.emit(this.isLoggedIn);
+            this.router.navigate(['']);
+        }
+
     }
 
-    public isLoggedIn(){
+    public checkIsLoggedIn(){
         const token = this.getToken();
         if(token){
             const payload = JSON.parse(window.atob(token.split('.')[1]));
@@ -71,8 +82,8 @@ export class AuthenticationService {
         }
     }
 
-    public currentUser(): User {
-        if(this.isLoggedIn()) {
+    public getCurrentUser(): User {
+        if(this.checkIsLoggedIn()) {
             const token = this.getToken();
             const payload = JSON.parse(window.atob(token.split('.')[1]));
             const user = new User();

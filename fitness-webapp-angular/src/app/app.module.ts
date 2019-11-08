@@ -23,7 +23,9 @@ import {
   MatMenuModule,
   MatToolbarModule,
   MatListModule,
-  MatDividerModule
+  MatSidenavModule,
+  MatDividerModule,
+  MatExpansionModule
 } from "@angular/material";
 
 import { NavigationBarComponent } from "./navigation-bar/navigation-bar.component";
@@ -58,9 +60,10 @@ import { ProfileComponent } from './profile/profile.component';
     AppRoutingModule,
     FlexLayoutModule,
     ReactiveFormsModule,
-    
+    MatSidenavModule,
     BrowserAnimationsModule,
     FormsModule,
+
     MatToolbarModule,
     MatIconModule,
     MatMenuModule,
@@ -74,7 +77,8 @@ import { ProfileComponent } from './profile/profile.component';
     MatTableModule,
     MatFormFieldModule,
     MatListModule,
-    MatDividerModule
+    MatDividerModule,
+    MatExpansionModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

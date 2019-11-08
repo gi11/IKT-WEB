@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
 import { AuthenticationService } from '../authentication.service'
+import {User} from '../user'
+
 @Component({
   selector: 'fitapp-navigation-bar',
   templateUrl: './navigation-bar.component.html',
@@ -7,23 +12,28 @@ import { AuthenticationService } from '../authentication.service'
 })
 export class NavigationBarComponent implements OnInit {
 
-  constructor(
-    private authService: AuthenticationService
-  ) { }
+  isLoggedIn: boolean 
+  user: User = null;
 
-  ngOnInit() {
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
+  
+  constructor(private breakpointObserver: BreakpointObserver, private authService: AuthenticationService) { 
+    
   }
 
-  onLogin(){
-    
+  ngOnInit() {
+    this.isLoggedIn = false;
+    this.authService.change.subscribe(isLoggedIn => {
+      this.isLoggedIn = isLoggedIn
+      this.user = this.authService.getCurrentUser(); 
+    });
   }
 
   onLogout(){
     this.authService.logout()
   }
-
-  isLoggedIn(){
-    return this.authService.isLoggedIn();
-  }
-
 }
