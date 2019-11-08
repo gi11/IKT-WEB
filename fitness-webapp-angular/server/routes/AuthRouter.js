@@ -28,7 +28,7 @@ router.post('/register', function(req, res) {
   if(!req.body.username|| !req.body.password) {
       console.log("All fields required");
       res.status(504)
-      .json({"errorMessage":"All fields required"});
+      .json({"errorMessage": "All fields required"});
   }
   const user= new User();
   user.username= req.body.username;
