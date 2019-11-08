@@ -1,4 +1,5 @@
 require("./models/WorkoutModel");
+require("./models/WorkoutActivityModel");
 require("./models/UserModel");
 var mongoose = require("mongoose");
 

@@ -23,8 +23,8 @@ module.exports = {
                 if (err) return handleError(err);
                 res.render('workoutdetails', { 
                     title: "Workout Details",
-                    user: user, 
-                    workout: workout 
+                    user: user,
+                    workout: workout
                 });
             }
         );

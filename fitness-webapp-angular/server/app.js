@@ -12,6 +12,7 @@ require('./db');
 
 const authRouter = require("./routes/AuthRouter");
 const workoutsRouter = require("./routes/WorkoutRouter");
+const workoutActivitiesRouter = require("./routes/WorkoutActivityRouter");
 const usersRouter = require("./routes/UserRouter");
 
 const app = express();
@@ -25,6 +26,7 @@ app.use(express.static(path.resolve(__dirname, "build")));
 
 app.use("/api", authRouter);
 app.use("/api/workouts", workoutsRouter);
+app.use("/api/workoutactivities", workoutActivitiesRouter);
 // app.use("/api/users", usersRouter);
 
 

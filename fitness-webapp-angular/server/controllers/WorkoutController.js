@@ -3,19 +3,24 @@ var Workout = mongoose.model("Workout");
 
 module.exports = {
   getAll: (req, res) => {
-    console.log("Workout Controller: Getting all workouts");
-    Workout.find({}, 
-      // "id name description", 
-      (err, workouts) => {
-      if (err) return handleError(err);
-      res.status(200).json(workouts);
-    });
+    if (!req.query.userid) {
+      console.log("Workout Controller: Getting all workouts");
+      Workout.find({}, "_id _userId name description", (err, workouts) => {
+        if (err) return handleError(err);
+        res.status(200).json(workouts);
+      });
+    } else {
+      return getAllByUser(req, res);
+    }
   },
   getAllByUser: (req, res) => {
-    console.log("Workout Controller: Getting all workouts By User");
+    const userId = req.query.userid;
+    console.log(
+      "Workout Controller: Getting all workouts By User with userid = " + userId
+    );
     Workout.find(
-      { userId: user.id },
-      "id name description",
+      { _userId: userid },
+      "_id _userId name description",
       (err, workouts) => {
         if (err) return handleError(err);
         res.status(200).json(workouts);
@@ -23,12 +28,16 @@ module.exports = {
     );
   },
   create: (req, res) => {
+    console.log(
+      "Workout Controller: Creating new workout from request with body:"
+    );
     console.log(req.body);
     const newWorkout = {
-      userId: req.body.userid,
+      _userId: req.body._userId,
       name: req.body.name,
       description: req.body.description
     };
+    console.log("Workout Controller: Creating new workout with properties:");
     console.log(newWorkout);
     Workout.create(newWorkout, function(err, created) {
       if (err) return handleError(err);
@@ -36,39 +45,40 @@ module.exports = {
     });
   },
   getOneWithId: (req, res) => {
-    Workout.findById(req.params.workout_id, (err, workout) => {
+    const workoutId = req.params.workout_id;
+    console.log("Workout Controller: Getting workout with id = " + workoutId);
+    Workout.findById(workoutId, (err, workout) => {
       if (err) return handleError(err);
       res.status(200).json(workout);
     });
   },
   updateOneWithId: (req, res) => {
-
+    console.log("HALLO")
+    const workoutId = req.params.workout_id;
+    console.log("Workout Controller: Updating workout with id = " + workoutId);
+    const updatedWorkout = {
+      name: req.body.name,
+      description: req.body.description
+    };
+    console.log("Workout Controller: New workout properties:");
+    console.log(updatedWorkout);
+    Workout.findByIdAndUpdate(
+      workoutId,
+      updatedWorkout,
+      (err, updated) => {
+        if (err) return handleError(err);
+        res.status(200).json({ message: "Workout Updated Succefully " });
+      }
+    );
   },
   deleteOneWithId: (req, res) => {
-    
+    const workoutId = req.params.workout_id;
+    console.log("Workout Controller: Deleting workout with id = " + workoutId);
+    Workout.findByIdAndDelete(workoutId, function(err, deleted) {
+      if (err) return handleError(err);
+      res.status(200).json({ message: "Workout Deleted Succefully " });
+    });
   }
-  // create: (req, res) => {
-  //     const workout_id = req.params.workout_id;
-  //     if (workout_id) {
-  //         WorkoutModel
-  //             .findById(workout_id)
-  //             .select('reviews')
-  //             .exec((err, location) =>{
-  //                 if (err) {
-  //                     res.status(400).json(err);
-  //                 } else {
-  //                     _doAddReview(req, res, location); // Private helper method
-  //                 }
-  //             }
-  //         );
-  //     } else {
-  //         res
-  //             .status(404)
-  //             .json({
-  //                 "message":"Not found, locationidrequired"
-  //         });
-  //     }
-  //     }
 };
 
 function handleError(err) {

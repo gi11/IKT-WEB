@@ -7,6 +7,7 @@ import { Workout } from '../workout';
   templateUrl: './workout-list.component.html',
   styles: []
 })
+
 export class WorkoutListComponent implements OnInit {
 
   workouts: Workout[] = [];

@@ -1,12 +1,8 @@
 <div fxLayout="row wrap" fxLayoutAlign="center center">
-  <mat-nav-list fxFlex="800px" fxFlex.xs="100%">
+  <mat-nav-list fxFlex="800px" fxFlex.lt-md="100%">
     <h3 mat-subheader>Workouts</h3>
     <mat-divider></mat-divider>
-    <a
-      mat-list-item
-      *ngFor="let workout of workouts"
-      [routerLink]="[workout._id]"
-    >
+    <a mat-list-item *ngFor="let workout of workouts" [routerLink]="[workout._id]">
       <mat-icon mat-list-icon>fitness_center</mat-icon>
       <h4 mat-line>{{ workout.name }}</h4>
       <p mat-line>{{ workout.description }}</p>
@@ -18,6 +14,10 @@
       </button> -->
     </a>
   </mat-nav-list>
+  <a mat-raised-button color="accent" [routerLink]="['create']" [state]="{ isCreateForm: true }">
+    <mat-icon>add</mat-icon>
+    <span> Create New Workout</span>
+  </a>
 </div>
 <!-- <mat-icon>directions_run</mat-icon>
 <mat-icon>directions_walk</mat-icon>
