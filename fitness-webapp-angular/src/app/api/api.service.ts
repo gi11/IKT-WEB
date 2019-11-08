@@ -3,8 +3,8 @@ import { HttpClient } from "@angular/common/http";
 import { Observable, of } from "rxjs";
 import { catchError, tap } from "rxjs/operators";
 
-import { Workout } from "./workout/workout";
-import { Exercise } from "./exercise/exercise";
+import { Workout } from "../workout/workout";
+import { Exercise } from "../exercise/exercise";
 
 @Injectable({
   providedIn: "root"

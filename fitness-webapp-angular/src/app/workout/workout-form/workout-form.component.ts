@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { ApiService } from "../../api.service";
+import { ApiService } from "../../api/api.service";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Workout } from "../workout";
-import { AuthenticationService } from "../../authentication.service";
+import { AuthenticationService } from "../../auth/authentication.service";
 import { MatDialog } from "@angular/material";
 import { Location } from "@angular/common";
 import { DialogSuccessComponent } from "../../shared/dialog-success/dialog-success.component";
@@ -50,7 +50,7 @@ export class WorkoutFormComponent implements OnInit {
         this.submitBtnText = "Apply Changes";
       }
     });
-    this.parentUserId = this.authService.currentUser()._id;
+    this.parentUserId = this.authService.getCurrentUser()._id;
     this.initializeForm();
     if (!this.isCreateForm) {
       const id = this.route.snapshot.paramMap.get("workoutid");

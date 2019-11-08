@@ -3,7 +3,7 @@ import { ActivatedRoute, Router, ParamMap } from "@angular/router";
 import { Observable } from "rxjs";
 
 import { Workout } from "../workout";
-import { ApiService } from "../../api.service";
+import { ApiService } from "../../api/api.service";
 
 @Component({
   selector: "fitapp-workout-details",

@@ -2,7 +2,7 @@ import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router'
 import {HttpClient, HttpErrorResponse} from '@angular/common/http'
 import {AuthResponse} from './auth-response';
-import { User } from './user';
+import { User } from '../user/user';
 
 @Injectable({
   providedIn: 'root',

@@ -1,13 +1,13 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { AuthGuard } from "./guards/auth.guard";
+import { AuthGuard } from "./auth/auth.guard";
 
 import { WorkoutListComponent } from "./workout/workout-list/workout-list.component";
 import { WorkoutDetailsComponent } from "./workout/workout-details/workout-details.component";
 import { WorkoutFormComponent } from "./workout/workout-form/workout-form.component";
 import { HomeComponent } from "./home/home.component";
-import { UserFormComponent } from "./user-form/user-form.component";
-import { ProfileComponent } from "./profile/profile.component";
+import { UserFormComponent } from "./user/user-form/user-form.component";
+import { ProfileComponent } from "./user/user-profile/user-profile.component";
 
 const routes: Routes = [
   // -----------------
@@ -61,6 +61,9 @@ const routes: Routes = [
       title: "Workouts Details"
     }
   },
+  // -----------------
+  // User Account
+  // -----------------
   {
     path: "profile",
     pathMatch: "full",
@@ -81,11 +84,6 @@ const routes: Routes = [
       type: "register"
     }
   }
-  // {
-  //   path: "blank",
-  //   loadChildren: () =>
-  //     import("./app-shell/blank/blank.module").then(mod => mod.BlankModule)
-  // }
 ];
 
 @NgModule({
