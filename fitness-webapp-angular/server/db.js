@@ -3,8 +3,9 @@ require("./models/WorkoutActivityModel");
 require("./models/UserModel");
 var mongoose = require("mongoose");
 
-var dbURI = "mongodb://localhost/fitness-webapp-DB";
+// var dbURI = "mongodb://localhost/fitness-webapp-DB";
 // var dbURI = process.env.MONGODB_URI;
+var dbURI = process.env.MONGODB_URI || "mongodb://localhost/fitness-webapp-DB";
 
 mongoose.connect(dbURI);
 

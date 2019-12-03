@@ -1,0 +1,54 @@
+<div *ngIf="workout">
+  <mat-toolbar>
+    <span>Workout Program</span>
+    <span class="spacer"></span>
+    <a
+      mat-icon-button
+      [routerLink]="['edit']"
+      *ngIf="user && user._id == workout._userId"
+    >
+      <mat-icon class="icon" color="secondary">edit</mat-icon>
+    </a>
+    <a
+      mat-icon-button
+      (click)="deleteWorkout()"
+      *ngIf="user && user._id == workout._userId"
+    >
+      <mat-icon class="icon" color="warn">
+        delete
+      </mat-icon>
+    </a>
+  </mat-toolbar>
+
+  <mat-card>
+    <mat-card-title>
+      {{ workout.name }}
+    </mat-card-title>
+    <mat-card-subtitle>
+      {{ workout.description }}
+    </mat-card-subtitle>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <fitapp-exercise-list
+        [exercises]="workout.exercises"
+        [parentWorkoutId]="workout._id"
+        [parentWorkoutUserId]="workout._userId"
+      ></fitapp-exercise-list>
+    </mat-card-content>
+    <mat-card-actions>
+      <button
+        *ngIf="user && user._id == workout._userId"
+        mat-raised-button
+        color="accent"
+        [routerLink]="['exercises/create']"
+        [state]="{ isCreateForm: true }"
+      >
+        <mat-icon>add</mat-icon>
+        <span> Add Exercise</span>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+  <fitapp-workout-activity-list
+    [workoutid]="workout._id"
+  ></fitapp-workout-activity-list>
+</div>

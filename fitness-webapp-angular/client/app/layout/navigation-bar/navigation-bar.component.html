@@ -1,0 +1,96 @@
+<mat-toolbar color="primary">
+  <button
+    type="button"
+    mat-icon-button
+    (click)="sidenav.toggle()"
+    fxShow="false"
+    fxHide.lt-md="false"
+  >
+    <!-- *ngIf="isHandset$ | async" -->
+    <mat-icon>menu</mat-icon>
+  </button>
+  <!-- Always visible buttons -->
+  <button mat-button [routerLink]="'/home'">Fitness App</button>
+  <div fxShow="true" fxHide.lt-md="true">
+    <a mat-button [routerLink]="'/home'"> Home </a>
+    <a mat-button [routerLink]="'/workouts'"> All Workouts </a>
+  </div>
+  <span class="menu-spacer"></span>
+  <div fxShow="true" fxHide.lt-md="true">
+    <!-- Not logged in buttons -->
+    <a *ngIf="!isLoggedIn" mat-button [routerLink]="'/register'">
+      Register
+    </a>
+    <a *ngIf="!isLoggedIn" mat-button [routerLink]="'/login'">
+      Login
+    </a>
+    <!-- Logged in buttons -->
+    <button *ngIf="isLoggedIn" mat-button [matMenuTriggerFor]="menu">
+      Hello {{ user.username }}!
+      <mat-icon>arrow_drop_down</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button
+        mat-menu-item
+        *ngIf="isLoggedIn"
+        class="displayBlock"
+        [routerLink]="'/users/' + user._id + '/workouts'"
+      >
+        My Workouts
+      </button>
+      <button
+        mat-menu-item
+        *ngIf="isLoggedIn"
+        class="displayBlock"
+        [routerLink]="'/users/' + user._id + '/profile'"
+      >
+        Profile
+      </button>
+      <button
+        mat-menu-item
+        *ngIf="isLoggedIn"
+        class="displayBlock"
+        (click)="onLogout()"
+      >
+        Logout
+      </button>
+    </mat-menu>
+  </div>
+</mat-toolbar>
+
+<mat-sidenav-container fxFlexFill>
+  <mat-sidenav #sidenav fxLayout="column">
+    <div fxLayout="column">
+      <!-- Always visible buttons -->
+      <button mat-button [routerLink]="'/home'">Home</button>
+      <button mat-button [routerLink]="'/workouts'">All Workouts</button>
+      <!-- Not logged in buttons -->
+      <button *ngIf="!isLoggedIn" mat-button [routerLink]="'/register'">
+        Register
+      </button>
+      <button *ngIf="!isLoggedIn" mat-button [routerLink]="'/login'">
+        Login
+      </button>
+      <!-- Logged in buttons -->
+      <button
+        mat-button
+        *ngIf="isLoggedIn"
+        class="displayBlock"
+        [routerLink]="'/users/' + user._id + '/profile'"
+      >
+        Profile
+      </button>
+      <button
+        mat-button
+        *ngIf="isLoggedIn"
+        class="displayBlock"
+        (click)="onLogout()"
+      >
+        Logout
+      </button>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

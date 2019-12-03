@@ -1,0 +1,40 @@
+<div fxLayout="row wrap" fxLayoutAlign="center center">
+  <mat-nav-list fxFlex="800px" fxFlex.lt-md="100%">
+    <h3 mat-subheader>Workouts</h3>
+    <mat-divider></mat-divider>
+    <a
+      mat-list-item
+      *ngFor="let workout of workouts"
+      [routerLink]="'/workouts/' + workout._id"
+    >
+      <mat-icon mat-list-icon>fitness_center</mat-icon>
+      <h4 mat-line>{{ workout.name }}</h4>
+      <p mat-line>{{ workout.description }}</p>
+      <a
+        mat-icon-button
+        *ngIf="user && user._id == workout._userId"
+        [routerLink]="'/workouts/' + workout._id + '/edit'"
+        (click)="$event.stopPropagation()"
+      >
+        <mat-icon>edit</mat-icon>
+      </a>
+      <a
+        mat-icon-button
+        *ngIf="user && user._id == workout._userId"
+        [routerLink]="['./']"
+        (click)="$event.stopPropagation(); delete(workout._id)"
+      >
+        <mat-icon>delete</mat-icon>
+      </a>
+    </a>
+  </mat-nav-list>
+  <a
+    mat-raised-button
+    color="accent"
+    [routerLink]="'/workouts/create'"
+    [state]="{ isCreateForm: true }"
+  >
+    <mat-icon>add</mat-icon>
+    <span> Create New Workout</span>
+  </a>
+</div>

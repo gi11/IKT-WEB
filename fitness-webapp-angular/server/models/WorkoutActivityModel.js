@@ -4,6 +4,8 @@ const Schema = mongoose.Schema;
 //Workout Activity Schema definition
 const WorkoutActivitySchema = new Schema({
     _userId : { required: true, type: Schema.Types.ObjectId},
+    username : String,
+    exerciseName : String,
     _workoutId : { required: true, type: Schema.Types.ObjectId},
     _exerciseId : { required: true, type: Schema.Types.ObjectId}
 });

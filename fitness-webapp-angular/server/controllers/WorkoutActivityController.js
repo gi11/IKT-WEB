@@ -8,7 +8,19 @@ module.exports = {
     } else if (req.query.userid && !req.query.workoutid) {
       return getAllByUser(req, res);
     } else if (!req.query.userid && req.query.workoutid) {
-      return getAllByWorkout(req, res);
+      const workoutId = req.query.workoutid;
+      console.log(
+        "WorkoutActivity Controller: Getting all WorkoutActivities By workout with workoutid = " +
+          workoutId
+      );
+      WorkoutActivity.find(
+        { _workoutId: workoutId },
+        "_id _userId username exerciseName _workoutId _exerciseId",
+        (err, workoutActivities) => {
+          if (err) return handleError(err);
+          res.status(200).json(workoutActivities);
+        }
+      );
     } else {
       return getAllByUserAndWorkout(req, res);
     }
@@ -17,7 +29,7 @@ module.exports = {
     console.log("WorkoutActivity Controller: Getting all WorkoutActivities");
     WorkoutActivity.find(
       {},
-      "_id _userId _workoutId _exerciseId",
+      "_id _userId username exerciseName _workoutId _exerciseId",
       (err, workoutActivities) => {
         if (err) return handleError(err);
         res.status(200).json(workoutActivities);
@@ -32,28 +44,14 @@ module.exports = {
     );
     WorkoutActivity.find(
       { _userId: userid },
-      "_id _userId _workoutId _exerciseId",
+      "_id _userId username exerciseName _workoutId _exerciseId",
       (err, workoutActivities) => {
         if (err) return handleError(err);
         res.status(200).json(workoutActivities);
       }
     );
   },
-  getAllByWorkout: (req, res) => {
-    const workoutId = req.query.workoutid;
-    console.log(
-      "WorkoutActivity Controller: Getting all WorkoutActivities By workout with workoutid = " +
-        workoutId
-    );
-    WorkoutActivity.find(
-      { _workoutId: workoutId },
-      "_id _userId _workoutId _exerciseId",
-      (err, workoutActivities) => {
-        if (err) return handleError(err);
-        res.status(200).json(workoutActivities);
-      }
-    );
-  },
+  getAllByWorkout: (req, res) => {},
   getAllByUserAndWorkout: (req, res) => {
     const workoutId = req.query.workoutid;
     const userId = req.query.userid;
@@ -65,7 +63,7 @@ module.exports = {
     );
     WorkoutActivity.find(
       { _workoutId: workoutId, _userId: userId },
-      "_id _userId _workoutId _exerciseId",
+      "_id _userId username exerciseName _workoutId _exerciseId",
       (err, workoutActivities) => {
         if (err) return handleError(err);
         res.status(200).json(workoutActivities);
@@ -80,9 +78,13 @@ module.exports = {
     const newWorkoutActivity = {
       _userId: req.body._userId,
       _workoutId: req.body._workoutId,
-      _exerciseId: req.body._exerciseId
+      _exerciseId: req.body._exerciseId,
+      username: req.body.username,
+      exerciseName: req.body.exerciseName
     };
-    console.log("WorkoutActivity Controller: Creating new WorkoutActivity with properties:");
+    console.log(
+      "WorkoutActivity Controller: Creating new WorkoutActivity with properties:"
+    );
     console.log(newWorkoutActivity);
     WorkoutActivity.create(newWorkoutActivity, function(err, created) {
       if (err) return handleError(err);
@@ -91,7 +93,9 @@ module.exports = {
   },
   deleteOneWithId: (req, res) => {
     const id = req.params.id;
-    console.log("WorkoutActivity Controller: Deleting WorkoutActivity with id = " + id);
+    console.log(
+      "WorkoutActivity Controller: Deleting WorkoutActivity with id = " + id
+    );
     WorkoutActivity.findByIdAndDelete(id, function(err, deleted) {
       if (err) return handleError(err);
       res.status(200).json({ message: "WorkoutActivity Deleted Succefully " });

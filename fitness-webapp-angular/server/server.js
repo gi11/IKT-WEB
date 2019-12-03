@@ -4,16 +4,16 @@
  * Module dependencies.
  */
 
-const debug = require("debug")("fitness-webapp-angular-backend:server");
 const http = require("http");
 const app = require("./app");
-const CONSTANTS = require("./constants");
 
 /**
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(CONSTANTS.PORT);
+var PORT = process.env.PORT || 3001;
+
+const port = normalizePort(PORT);
 app.set("port", port);
 
 /**
@@ -83,5 +83,5 @@ function onError(error) {
 function onListening() {
   const addr = server.address();
   const bind = typeof addr === "string" ? `pipe ${addr}` : `port ${addr.port}`;
-  debug(`Listening on ${bind}`);
+  console.log(`Listening on ${bind}`);
 }

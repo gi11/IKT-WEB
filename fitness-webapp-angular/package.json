@@ -1,27 +1,54 @@
 {
   "name": "fitness-webapp-angular",
-  "version": "0.1.0",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "node ./server/server.js",
+    "start-ng": "ng serve",
+    "build": "ng build",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "postinstall": "ng build --output-path ./server/build"
+  },
   "private": true,
   "dependencies": {
+    "@angular/animations": "~8.2.13",
+    "@angular/cdk": "^8.2.3",
     "@angular/cli": "^8.3.18",
+    "@angular/common": "~8.2.13",
+    "@angular/compiler": "~8.2.13",
+    "@angular/compiler-cli": "^8.2.13",
+    "@angular/core": "~8.2.13",
+    "@angular/flex-layout": "^8.0.0-beta.27",
+    "@angular/forms": "^8.2.13",
+    "@angular/http": "^7.2.15",
+    "@angular/material": "^8.2.3",
+    "@angular/platform-browser": "~8.2.13",
+    "@angular/platform-browser-dynamic": "~8.2.13",
+    "@angular/router": "~8.2.13",
     "bcrypt": "^3.0.6",
     "compression": "^1.7.4",
+    "debug": "^4.1.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-jwt": "^5.3.1",
+    "http": "0.0.0",
     "http-errors": "^1.7.3",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.7.8",
-    "morgan": "^1.9.1"
+    "mongoose": "^5.7.10",
+    "morgan": "^1.9.1",
+    "rxjs": "~6.4.0",
+    "tslib": "^1.10.0",
+    "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "concurrently": "^5.0.0",
-    "nodemon": "^1.19.4"
-  },
-  "scripts": {
-    "start": "concurrently \"npm run start-frontend\" \"npm run start-backend\"",
-    "start-frontend": "cd client && npm run start-frontend",
-    "start-backend": "cd server && npm run start-backend"
-  },
-  "proxy": "http://localhost:3001"
+    "@angular-devkit/build-angular": "~0.803.17",
+    "@angular/language-service": "~8.2.13",
+    "@types/node": "~8.9.4",
+    "nodemon": "^1.19.4",
+    "ts-node": "~7.0.0",
+    "tslint": "~5.15.0",
+    "typescript": "~3.5.3"
+  }
 }

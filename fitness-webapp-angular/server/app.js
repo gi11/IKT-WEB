@@ -29,7 +29,8 @@ app.use("/api/workoutactivities", workoutActivitiesRouter);
 
 
 app.get("*", (req, res) => {
-  res.sendFile("build/index.html", { root: __dirname });
+  // res.sendFile("build/index.html", { root: __dirname });
+  res.sendFile(path.join(__dirname + '/build/index.html'));
 });
 
 // catch 404 and forward to error handler

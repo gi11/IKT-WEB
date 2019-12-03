@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 var Workout = mongoose.model("Workout");
-
+var ObjectId = require('mongoose').Types.ObjectId; 
 module.exports = {
   getAll: (req, res) => {
     if (!req.query.userid) {
@@ -10,7 +10,20 @@ module.exports = {
         res.status(200).json(workouts);
       });
     } else {
-      return getAllByUser(req, res);
+      // return getAllByUser(req, res);
+      const userId = req.query.userid;
+      console.log(
+        "Workout Controller: Getting all workouts By User with userid = " +
+          userId
+      );
+      Workout.find(
+        { "_userId": new ObjectId(userId) },
+        "_id _userId name description",
+        (err, workouts) => {
+          if (err) return handleError(err);
+          res.status(200).json(workouts);
+        }
+      );
     }
   },
   getAllByUser: (req, res) => {
@@ -53,7 +66,7 @@ module.exports = {
     });
   },
   updateOneWithId: (req, res) => {
-    console.log("HALLO")
+    console.log("HALLO");
     const workoutId = req.params.workout_id;
     console.log("Workout Controller: Updating workout with id = " + workoutId);
     const updatedWorkout = {
@@ -62,14 +75,10 @@ module.exports = {
     };
     console.log("Workout Controller: New workout properties:");
     console.log(updatedWorkout);
-    Workout.findByIdAndUpdate(
-      workoutId,
-      updatedWorkout,
-      (err, updated) => {
-        if (err) return handleError(err);
-        res.status(200).json({ message: "Workout Updated Succefully " });
-      }
-    );
+    Workout.findByIdAndUpdate(workoutId, updatedWorkout, (err, updated) => {
+      if (err) return handleError(err);
+      res.status(200).json({ message: "Workout Updated Succefully " });
+    });
   },
   deleteOneWithId: (req, res) => {
     const workoutId = req.params.workout_id;
