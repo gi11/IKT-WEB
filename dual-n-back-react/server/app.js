@@ -10,10 +10,9 @@ var mongoose = require("mongoose");
 require('./db');
 
 const authRouter = require("./routes/AuthRouter");
+const userRouter = require("./routes/UserRouter");
 
 const app = express();
-
-// const buildpath = "../client/build";
 
 app.use(compression());
 app.use(logger("dev"));
@@ -23,7 +22,8 @@ buildpath = path.resolve(__dirname, "../client", "build");
 console.log(buildpath)
 app.use(express.static(buildpath));
 
-app.use("/auth", authRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/users", userRouter);
 
 indexpath = path.resolve(__dirname, "../client", "build", "index.html");
 console.log(indexpath)

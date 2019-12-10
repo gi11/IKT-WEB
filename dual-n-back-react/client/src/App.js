@@ -1,26 +1,52 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Switch, Route } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
+// import NotFoundPage from './pages/NotFoundPage';
+import LoginPage from './pages/LoginPage';
+import HomePage from './pages/HomePage';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/home">
+          <HomePage />
+        </Route>
+        <Route path="/game">
+          <HomePage />
+        </Route>
+        <Route path="/login">
+          <LoginPage />
+        </Route>
+        <Route path="/">
+          <HomePage />
+        </Route>
+        {/* <PrivateRoute path="/auth_test" component={Layout} /> */}
+      </Switch>
+    </BrowserRouter>
   );
 }
+
+// function PrivateRoute({ component, ...rest }) {
+//   return (
+//     <Route {...rest} render= {
+//         props =>
+//           isAuthenticated ? (
+//             React.createElement(component, props)
+//           ) : (
+//               <Redirect to={
+//                 {
+//                   pathname: "/login",
+//                   state: {
+//                     from: props.location,
+//                   },
+//                 }
+//               }
+//               />
+//             )
+//       }
+//     />
+//   );
+// }
 
 export default App;
