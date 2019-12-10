@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 // import NotFoundPage from './pages/NotFoundPage';
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
+import ScorePage from './pages/ScorePage';
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
         </Route>
         <Route path="/login">
           <LoginPage />
+        </Route>
+        <Route path="/scores">
+          <ScorePage />
         </Route>
         <Route path="/">
           <HomePage />
