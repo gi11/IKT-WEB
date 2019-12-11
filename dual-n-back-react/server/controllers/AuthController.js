@@ -36,7 +36,7 @@ module.exports = {
       if (!user) {
         console.log(`No user found, user = ${user}`);
         res.status(406).json({
-          message: "incorrect username"
+          message: "Incorrect username"
         });
         return next(null, false, {
           message: "Incorrect username."
@@ -45,7 +45,7 @@ module.exports = {
       if (user && !user.validPassword(password)) {
         console.log(`Failed to validate password = ${password}`);
         res.status(406).json({
-          message: "incorrect password"
+          message: "Incorrect password"
         });
         return next(null, false, {
           message: "Incorrect password."

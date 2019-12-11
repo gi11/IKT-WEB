@@ -13,7 +13,7 @@ const scoreCtrl = require('./controllers/ScoreController')
  * Get port from environment and store in Express.
  */
 
-var PORT = process.env.PORT || 5000;
+var PORT = process.env.PORT || 8080;
 
 const port = normalizePort(PORT);
 app.set("port", port);

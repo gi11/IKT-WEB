@@ -7,18 +7,54 @@ import {
   CircularProgress,
   Button
 } from "@material-ui/core";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions
+} from "@material-ui/core";
 import { withRouter, Link } from "react-router-dom";
 import { useAuthDispatch } from "../context/AuthContext";
 import axios from "axios";
 
-function LoginPage(props) {
+function RegisterPage(props) {
   var [isLoading, setIsLoading] = useState(false);
   var [usernameValue, setusernameValue] = useState("");
-  // var [nameValue, setNameValue] = useState("");
   var [passwordValue, setPasswordValue] = useState("");
   var [errors, setErrors] = useState({});
 
   var authDispatch = useAuthDispatch();
+
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+  function SuccessDialog(props) {
+    return (
+      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+        <DialogTitle>{"Success"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Account registration was successful. You can now log in with the
+            entered credentials.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDialogOpen(false)} color="primary">
+            Close
+          </Button>
+          <Button
+            onClick={() => {
+              setDialogOpen(false);
+              props.history.push("/login");
+            }}
+            color="primary"
+            autoFocus
+          >
+            Go to Login page
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+  }
 
   function validate(username, password) {
     let errors = null;
@@ -35,7 +71,7 @@ function LoginPage(props) {
     return errors;
   }
 
-  function loginUser(username, password) {
+  function registerUser(username, password) {
     setIsLoading(true);
     var validationErrors = validate(username, password);
     if (validationErrors) {
@@ -48,24 +84,24 @@ function LoginPage(props) {
         username: username,
         password: password
       };
-      const url = "/api/auth/login";
+      const url = "/api/auth/register";
       axios
         .post(url, data)
         .then(res => {
           console.log("Response");
           console.log(res);
-          localStorage.setItem("dualnback_id_token", res.data.token);
           setErrors({});
           setIsLoading(false);
-          authDispatch({ type: "LOGIN_SUCCESS" });
-          props.history.push("/profile");
+          authDispatch({ type: "REGISTER_SUCCESS" });
+        //   console.log("Doalog should open...")
+          setDialogOpen(true)
         })
         .catch(err => {
           console.log("Error response");
           console.log(err.response);
           setErrors({ response: err.response.data.message });
           setIsLoading(false);
-          authDispatch({ type: "LOGIN_FAILURE" });
+          authDispatch({ type: "REGISTER_FAILURE" });
         });
     }
   }
@@ -82,7 +118,6 @@ function LoginPage(props) {
         onChange={e => setusernameValue(e.target.value)}
         margin="normal"
         placeholder="Username"
-        // type="email"
         fullWidth
       />
       <Fade in={errors.username}>
@@ -102,24 +137,22 @@ function LoginPage(props) {
       </Fade>
       <>
         {isLoading ? (
-          <CircularProgress size={26} className="loginLoader" />
+          <CircularProgress size={26} />
         ) : (
           <Button
             disabled={usernameValue.length === 0 && passwordValue.length === 0}
-            onClick={() => loginUser(usernameValue, passwordValue)}
+            onClick={() => registerUser(usernameValue, passwordValue)}
             variant="contained"
             color="primary"
             size="large"
           >
-            Login
+            Sign Up
           </Button>
         )}
-        <Button component={Link} to={"/register"} color="primary" size="large">
-          Register
-        </Button>
       </>
+      <SuccessDialog history={props.history} />
     </div>
   );
 }
 
-export default withRouter(LoginPage);
+export default withRouter(RegisterPage);

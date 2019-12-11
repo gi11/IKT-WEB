@@ -1,13 +1,13 @@
 import React from 'react';
 
-function HomePage() {
+function ProfilePage() {
     return (
       <div>
         <h1>
-         This is the home page!
+          Profile page is here!
         </h1>
       </div>
     );
   }
   
-  export default HomePage;
+  export default ProfilePage;
