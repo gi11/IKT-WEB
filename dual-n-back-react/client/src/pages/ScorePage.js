@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import ScoreDisplay from '../score/ScoreDisplay';
+import ScoreDisplay_ from '../score/ScoreDisplay_score';
 
 class ScorePage extends Component {
     constructor(props) {
@@ -10,7 +10,7 @@ class ScorePage extends Component {
     render() {
         return (
             <div>
-                <ScoreDisplay/>
+                <ScoreDisplay_/>
             </div>
         );
     }

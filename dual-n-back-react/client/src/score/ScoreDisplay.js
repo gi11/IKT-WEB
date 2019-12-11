@@ -7,49 +7,47 @@ class ScoreDisplay extends Component {
     this.state = {
 
       endpoint: "http://localhost:5000",
-      
-      ///''
-      color: 'white'
-      ///
-      
+      highScores : [],
+      score: {'score': 1000, 'name': "user1"},
+      socket : {}
     };
+  }
+
+  componentDidMount(){
+    const {endpoint} = this.state;
+    const socket = socketIOClient(endpoint);
+    this.setState({socket});
+    // testing for socket connections
+    socket.on('scores updated', (highScores) => {
+      this.setHighScores(highScores);
+    })
   }
 
   // sending sockets
   send = () => {
-    const socket = socketIOClient(this.state.endpoint);
-    socket.emit('change color', this.state.color) // change 'red' to this.state.color
+    const {socket} = this.state;
+    socket.emit('new score', this.state.score)
   }
 
-  ///
   
   // adding the function
-  setColor = (color) => {
-    this.setState({ color })
+  setHighScores = (highScores) => {
+    this.setState({ highScores })
   }
-  
-  ///
 
   render() {
-    // testing for socket connections
-
-    const socket = socketIOClient(this.state.endpoint);
-    socket.on('change color', (col) => {
-      document.body.style.backgroundColor = col
+    const highscoreList = this.state.highScores.map(score  => {
+      return (
+        <li>{score.score}, {score.name}</li>
+        )
     })
-
+  
     return (
-      <div style={{ textAlign: "center" }}>
-        <button onClick={() => this.send() }>Change Color</button>
-
-
-        ///
-
-        // adding the two buttons, also, remove all of the comments in the JSX section.
-        <button id="blue" onClick={() => this.setColor('blue')}>Blue</button>
-        <button id="red" onClick={() => this.setColor('red')}>Red</button>
-        ///
-
+      <div>
+        <button onClick={() => this.send() }>Send Score</button>
+        <ol>
+          {highscoreList}
+        </ol>
       </div>
     )
   }
