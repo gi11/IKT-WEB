@@ -31,7 +31,7 @@ class Layout extends Component {
   render() {
     var items = [
       { text: "Play", link: "/play" },
-      { text: "Highscores", link: "/highscores" },
+      { text: "Highscores", link: "/scores" },
       { text: "Login", link: "/login" },
       { text: "Register", link: "/register" },
       { text: "Profile", link: "/profile" },

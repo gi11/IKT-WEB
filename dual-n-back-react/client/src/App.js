@@ -6,7 +6,7 @@ import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ProfilePage from "./pages/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";
-import ScorePage from './pages/ScorePage';
+import ScorePage from "./pages/ScorePage";
 
 import { useAuthState } from "./context/AuthContext";
 
