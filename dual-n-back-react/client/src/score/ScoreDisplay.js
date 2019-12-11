@@ -10,7 +10,7 @@ class ScoreDisplay extends Component {
 
       endpoint: "http://localhost:5000",
       highscores : [],
-      score: {'score': 1000, 'name': "user1"},
+      score: {'score': 10000, 'name': "BEST"},
       socket : {}
     };
 
@@ -41,11 +41,6 @@ class ScoreDisplay extends Component {
   }
 
   render() {
-    // const highscoreList = this.state.highscores.map(score  => {
-    //   return (
-    //     <li>{score.score}, {score.name}</li>
-    //     )
-    // })
     return (
       <div>
         <button onClick={() => this.send() }>Send Score</button>

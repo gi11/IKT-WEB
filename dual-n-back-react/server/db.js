@@ -1,5 +1,6 @@
 
 require("./models/UserModel");
+require("./models/ScoreModel")
 var mongoose = require("mongoose");
 
 var dbURI = process.env.MONGODB_URI || "mongodb://localhost/front-n-back-DB";

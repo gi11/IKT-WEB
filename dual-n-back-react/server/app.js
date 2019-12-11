@@ -25,6 +25,7 @@ app.use(express.static(buildpath));
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 
+
 indexpath = path.resolve(__dirname, "../client", "build", "index.html");
 console.log(indexpath)
 app.get("*", (req, res) => {
