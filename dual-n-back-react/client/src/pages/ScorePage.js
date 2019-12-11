@@ -10,7 +10,7 @@ class ScorePage extends Component {
     render() {
         return (
             <div>
-                <ScoreDisplay/>
+                <ScoreDisplay score={{ 'score': 500, 'name': "test"}}/>
             </div>
         );
     }

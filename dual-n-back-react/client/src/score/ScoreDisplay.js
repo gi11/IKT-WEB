@@ -1,25 +1,32 @@
 import React, { Component } from "react";
 import socketIOClient from "socket.io-client";
+import  ScoreList from './ScoreList';
 
 class ScoreDisplay extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.state = {
 
       endpoint: "http://localhost:5000",
-      highScores : [],
+      highscores : [],
       score: {'score': 1000, 'name': "user1"},
       socket : {}
     };
+
+
   }
 
   componentDidMount(){
     const {endpoint} = this.state;
     const socket = socketIOClient(endpoint);
     this.setState({socket});
+    socket.emit('new score', this.props.score)
+    
+   
     // testing for socket connections
-    socket.on('scores updated', (highScores) => {
-      this.setHighScores(highScores);
+    socket.on('scores updated', (highscores) => {
+      this.setHighscores(highscores);
     })
   }
 
@@ -29,25 +36,20 @@ class ScoreDisplay extends Component {
     socket.emit('new score', this.state.score)
   }
 
-  
-  // adding the function
-  setHighScores = (highScores) => {
-    this.setState({ highScores })
+  setHighscores = (highscores) => {
+    this.setState({ highscores })
   }
 
   render() {
-    const highscoreList = this.state.highScores.map(score  => {
-      return (
-        <li>{score.score}, {score.name}</li>
-        )
-    })
-  
+    // const highscoreList = this.state.highscores.map(score  => {
+    //   return (
+    //     <li>{score.score}, {score.name}</li>
+    //     )
+    // })
     return (
       <div>
         <button onClick={() => this.send() }>Send Score</button>
-        <ol>
-          {highscoreList}
-        </ol>
+        <ScoreList highscores={this.state.highscores}/>
       </div>
     )
   }
