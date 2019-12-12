@@ -1,15 +1,13 @@
 const mongoose = require("mongoose");
 var Score = mongoose.model("Score");
-var ObjectId = require('mongoose').Types.ObjectId;
+var ObjectId = require("mongoose").Types.ObjectId;
 
 module.exports = {
-  create: (score) => {
-    console.log(
-      "Score Controller: Creating new score from passed data:"
-    );
+  create: score => {
+    console.log("Score Controller: Creating new score from passed data:");
     console.log(JSON.stringify(score));
     const newScore = {
-    //   _userId: score._userId,
+      //   _userId: score._userId,
       name: score.name,
       score: score.score
     };
@@ -20,13 +18,14 @@ module.exports = {
     });
   },
 
-  getTopScores: (callback) => {
-      console.log("Score controller retrieving highest scores");
-      Score.find({})
-      .sort({score: -1})
-      .limit(8).exec(function(err, scores){
-          handleError(err);
-          callback(scores);
+  getTopScores: callback => {
+    console.log("Score controller retrieving highest scores");
+    Score.find({})
+      .sort({ score: -1 })
+      .limit(8)
+      .exec(function(err, scores) {
+        handleError(err);
+        callback(scores);
       });
   }
 };

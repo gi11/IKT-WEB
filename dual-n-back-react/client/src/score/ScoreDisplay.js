@@ -7,7 +7,7 @@ class ScoreDisplay extends Component {
     super(props);
 
     this.state = {
-      endpoint: "http://localhost:5000",
+      endpoint: process.env.REACT_APP_SITE_URL,
       highscores: [],
       score: { score: 10000, name: "BEST" },
       socket: {}
@@ -16,6 +16,8 @@ class ScoreDisplay extends Component {
 
   componentDidMount() {
     const { endpoint } = this.state;
+    console.log("Endpoint:")
+    console.log(endpoint)
     const socket = socketIOClient(endpoint);
     this.setState({ socket });
     socket.emit("new score", this.props.score);

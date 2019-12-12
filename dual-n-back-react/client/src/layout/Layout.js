@@ -38,6 +38,7 @@ class Layout extends Component {
       { text: "Logout", action: "logout" },
     ];
 
+    
     return (
       <>
         <TopBar

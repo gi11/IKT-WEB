@@ -87,7 +87,7 @@ io.on('connection', socket => {
 })
 
 function emitHighestScores() {
-  let highScores = scoreCtrl.getTopScores(
+  scoreCtrl.getTopScores(
     scores => {
       console.log(scores)
       io.sockets.emit("scores updated", scores);
