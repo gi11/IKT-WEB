@@ -3,9 +3,9 @@ import React from 'react';
 function NotFoundPage() {
     return (
       <div>
-        <p>
-          Not Found
-        </p>
+        <h1>
+          Page Not Found
+        </h1>
       </div>
     );
   }

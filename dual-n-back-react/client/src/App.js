@@ -7,36 +7,14 @@ import NotFoundPage from "./pages/NotFoundPage";
 import ProfilePage from "./pages/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";
 import ScorePage from "./pages/ScorePage";
+import GamePage from "./pages/GamePage";
 
 import { useAuthState } from "./context/AuthContext";
 
 function App() {
   var { isAuthenticated } = useAuthState();
 
-  return (
-    <Switch>
-      <Route path="/home">
-        <HomePage />
-      </Route>
-      <Route path="/game">
-        <HomePage />
-      </Route>
-      <AuthRoute path="/profile" component={ProfilePage} />
-      <Route path="/login">
-        <LoginPage />
-      </Route>
-      <Route path="/register">
-        <RegisterPage />
-      </Route>
-      <Route path="/scores">
-        <ScorePage />
-      </Route>
-      <Route path="/">
-        <NotFoundPage />
-      </Route>
-    </Switch>
-  );
-
+  //Redirects to /login if not authenticated
   function AuthRoute({ component, ...rest }) {
     return (
       <Route
@@ -53,6 +31,25 @@ function App() {
       />
     );
   }
+
+  return (
+    <Switch>
+      <Route exact path="/" component={HomePage}/>
+      <AuthRoute path="/game" component={GamePage} />
+      <AuthRoute path="/profile" component={ProfilePage} />
+      <Route path="/login">
+        <LoginPage />
+      </Route>
+      <Route path="/register">
+        <RegisterPage />
+      </Route>
+      <Route path="/scores">
+        <ScorePage />
+      </Route>
+      <Redirect from="/home" to="/"/>
+      <Route path="*" component={NotFoundPage}/>
+    </Switch>
+  );
 }
 
 export default App;

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { styled } from "@material-ui/core/styles";
-import { Drawer, List, ListItem } from "@material-ui/core";
+import { Drawer, List, ListItem, Divider} from "@material-ui/core";
 import { withRouter, Link } from "react-router-dom";
 import { useAuthDispatch, useAuthState, logOut } from "../context/AuthContext";
 
@@ -10,6 +10,7 @@ const SideMenuItems = styled(List)({
 
 function SideBar(props) {
   var authDispatch = useAuthDispatch();
+  var { isAuthenticated, currentUser } = useAuthState();
 
   function SideMenuItem(props) {
     if (props.link) {
@@ -18,7 +19,7 @@ function SideBar(props) {
           {props.text}
         </ListItem>
       );
-    } else if (props.action == "logout") {
+    } else if (props.action === "logout") {
       return (
         <ListItem
           button
@@ -39,14 +40,37 @@ function SideBar(props) {
     >
       <div role="button" onClick={() => props.onClose()}>
         <SideMenuItems>
+          <p style={{ marginTop: 40 }}>Dual-n-back</p>
+          <Divider />
           {props.items.map(btn => {
             return (
-              <SideMenuItem
-                text={btn.text}
-                link={btn.link}
-                action={btn.action}
-                history={props.history}
-              />
+              btn.visible === "always" && (
+                <SideMenuItem key={btn.text}
+                  text={btn.text}
+                  link={btn.link}
+                  action={btn.action}
+                  history={props.history}
+                />
+              )
+            );
+          })}
+          {isAuthenticated ? (
+            <p style={{ marginTop: 50 }}>Logged in as {currentUser.username}</p>
+          ) : (
+            <p style={{ marginTop: 50 }}>You are not logged in</p>
+          )}
+          <Divider />
+          {props.items.map(btn => {
+            return (
+              btn.visible ===
+                (isAuthenticated ? "authenticated" : "not_authenticated") && (
+                <SideMenuItem key={btn.text}
+                  text={btn.text}
+                  link={btn.link}
+                  action={btn.action}
+                  history={props.history}
+                />
+              )
             );
           })}
         </SideMenuItems>

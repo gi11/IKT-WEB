@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { AppBar, Toolbar, Typography, Button, Grid } from "@material-ui/core";
+import React from "react";
+import { AppBar, Toolbar, Typography, Button } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import { useAuthDispatch, useAuthState, logOut } from "../context/AuthContext";
 import { styled } from "@material-ui/core/styles";
@@ -8,15 +8,9 @@ import { withRouter, Link } from "react-router-dom";
 const OpenMenuIcon = styled(MenuIcon)({
   padding: 0,
   color: "white",
-  cursor: "pointer"
+  cursor: "pointer",
+  marginRight: 10
 });
-
-// const classes = {
-//   topMenuItem: {
-//     paddingRight: 30,
-//     cursor: "pointer"
-//   }
-// };
 
 function TopBar(props) {
   var { isAuthenticated, currentUser } = useAuthState();
@@ -29,7 +23,8 @@ function TopBar(props) {
           component={Link}
           to={props.link}
           variant="contained"
-          color="primary"
+          // color="white"
+          style={props.style}
         >
           {props.text}
         </Button>
@@ -39,7 +34,8 @@ function TopBar(props) {
         <Button
           onClick={() => logOut(authDispatch, props.history)}
           variant="contained"
-          color="primary"
+          // color="white"
+          style={props.style}
         >
           {props.text}
         </Button>
@@ -53,28 +49,49 @@ function TopBar(props) {
         {props.menuButtonVisible && (
           <OpenMenuIcon onClick={() => props.menuButtonClicked()} />
         )}
-        <Typography variant="h5" style={{ flexGrow: 1 }}>
+        <Typography variant="h5" style={{marginRight: 30}}>
           Dual-n-Back
         </Typography>
-        {isAuthenticated ? (
-          <Typography variant="subtitle2">
-            Logged in as {currentUser.username}
-            {/* Hello {currentUser.username} */}
-          </Typography>
-        ) : (
-          <Typography variant="subtitle2">You not logged in</Typography>
-        )}
-        {props.menuItemsVisible &&
-          props.items.map(btn => {
-            return (
-              <TopMenuButton
-                text={btn.text}
-                link={btn.link}
-                action={btn.action}
-                history={props.history}
-              />
-            );
-          })}
+        <span>
+          {props.menuItemsVisible &&
+            props.items.map(btn => {
+              return (
+                btn.visible == "always" && (
+                  <TopMenuButton key={btn.text}
+                    text={btn.text}
+                    link={btn.link}
+                    action={btn.action}
+                    history={props.history}
+                    style={{ margin: 5 }}
+                  />
+                )
+              );
+            })}
+        </span>
+        <div style={{marginLeft: 'auto'}}>
+          {isAuthenticated ? (
+            <Typography variant="subtitle2">
+              Logged in as {currentUser.username}
+            </Typography>
+          ) : (
+            <Typography variant="subtitle2">You are not logged in</Typography>
+          )}
+          {props.menuItemsVisible &&
+            props.items.map(btn => {
+              return (
+                btn.visible ==
+                  (isAuthenticated ? "authenticated" : "not_authenticated") && (
+                  <TopMenuButton key={btn.text}
+                    text={btn.text}
+                    link={btn.link}
+                    action={btn.action}
+                    history={props.history}
+                    style={{ margin: 5 }}
+                  />
+                )
+              );
+            })}
+        </div>
       </Toolbar>
     </AppBar>
   );

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { withRouter, Link } from "react-router-dom";
+import axios from "axios";
 import {
   Fade,
   Typography,
@@ -7,14 +8,16 @@ import {
   CircularProgress,
   Button
 } from "@material-ui/core";
-import { withRouter, Link } from "react-router-dom";
+
 import { useAuthDispatch } from "../context/AuthContext";
-import axios from "axios";
+
+const loginPageStyles = {
+  width: `400px`,
+};
 
 function LoginPage(props) {
   var [isLoading, setIsLoading] = useState(false);
   var [usernameValue, setusernameValue] = useState("");
-  // var [nameValue, setNameValue] = useState("");
   var [passwordValue, setPasswordValue] = useState("");
   var [errors, setErrors] = useState({});
 
@@ -52,8 +55,7 @@ function LoginPage(props) {
       axios
         .post(url, data)
         .then(res => {
-          console.log("Response");
-          console.log(res);
+          console.log("Saving received token");
           localStorage.setItem("dualnback_id_token", res.data.token);
           setErrors({});
           setIsLoading(false);
@@ -61,8 +63,7 @@ function LoginPage(props) {
           props.history.push("/profile");
         })
         .catch(err => {
-          console.log("Error response");
-          console.log(err.response);
+          console.log("Login Failed");
           setErrors({ response: err.response.data.message });
           setIsLoading(false);
           authDispatch({ type: "LOGIN_FAILURE" });
@@ -71,7 +72,8 @@ function LoginPage(props) {
   }
 
   return (
-    <div>
+    <div style={loginPageStyles}>
+      <h1>Login</h1>
       <Fade in={errors.response}>
         <Typography color="secondary">{errors.response}</Typography>
       </Fade>
@@ -82,7 +84,6 @@ function LoginPage(props) {
         onChange={e => setusernameValue(e.target.value)}
         margin="normal"
         placeholder="Username"
-        // type="email"
         fullWidth
       />
       <Fade in={errors.username}>

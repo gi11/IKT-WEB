@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import ScoreDisplay from "../score/ScoreDisplay";
 
 class ScorePage extends Component {
@@ -9,8 +8,8 @@ class ScorePage extends Component {
 
   render() {
     return (
-      <div>
-        <ScoreDisplay score={{ score: 500, name: "test" }} />
+      <div style={{width: "500px", paddingTop: "50px"}}>
+        <ScoreDisplay/>
       </div>
     );
   }

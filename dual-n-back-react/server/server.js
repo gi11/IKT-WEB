@@ -31,53 +31,22 @@ const server = http.createServer(app);
 
 const io = socketIO(server);
 
-// let highScores = [
-//   { "score": 0, "name": "none" },
-//   { "score": 0, "name": "none" },
-//   { "score": 0, "name": "none" },
-//   { "score": 0, "name": "none" },
-//   { "score": 0, "name": "none" },
-//   { "score": 0, "name": "none" },
-//   { "score": 0, "name": "none" },
-//   { "score": 0, "name": "none" },
-//   { "score": 0, "name": "none" },
-//   { "score": 10000, "name": "BEST" }
-// ];
-
 
 // This is what the socket.io syntax is like, we will work this later
 io.on('connection', socket => {
-  //   highScores.sort((a, b) => (a.score < b.score) ? 1 : -1);
   console.log('New client connected')
 
    // disconnect is fired when a client leaves the server
    socket.on('disconnect', () => {
     console.log('user disconnected')
   })
-  //   io.sockets.emit("scores updated", highScores)
 
-  //   socket.on("new score", (score) => {
-  //     console.log(`Score received: ${score.name}, ${score.score}`)
-  //     var foundSubstitute = highScores.some((it_score, index, array) => {
-  //       return it_score.score < score.score;
-  //     });
+  //Request to get highscores
+  socket.on("get scores", () => {
+    emitHighestScores();
+  })
 
-  //     console.log(foundSubstitute)
-
-  //     if(foundSubstitute){
-  //       highScores[9] = score;
-  //       highScores.sort((a, b) => (a.score < b.score) ? 1 : -1);
-  //       console.log(JSON.stringify(highScores));
-  //       io.sockets.emit("scores updated", highScores);
-  //     }
-
-  // // highScores.push(score);
-  // highScores.sort();
-
-
-  //** DB IMPLEMENTATION */
-  // emitHighestScores();
-
+  //On new score submitted
   socket.on("new score", (score) => {
     console.log(`Score received: ${score.name}, ${score.score}`);
     scoreCtrl.create(score);

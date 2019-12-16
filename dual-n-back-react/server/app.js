@@ -11,6 +11,7 @@ require('./db');
 
 const authRouter = require("./routes/AuthRouter");
 const userRouter = require("./routes/UserRouter");
+const scoreRouter = require("./routes/ScoreRouter");
 
 const app = express();
 
@@ -23,6 +24,7 @@ console.log(buildpath)
 app.use(express.static(buildpath));
 
 app.use("/api/auth", authRouter);
+app.use("/api/scores", scoreRouter);
 app.use("/api/users", userRouter);
 
 

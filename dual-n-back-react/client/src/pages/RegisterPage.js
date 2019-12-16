@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
 import {
   Fade,
   Typography,
@@ -14,9 +13,13 @@ import {
   DialogContentText,
   DialogActions
 } from "@material-ui/core";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { useAuthDispatch } from "../context/AuthContext";
 import axios from "axios";
+
+const registerPageStyles = {
+  width: `400px`,
+};
 
 function RegisterPage(props) {
   var [isLoading, setIsLoading] = useState(false);
@@ -93,7 +96,6 @@ function RegisterPage(props) {
           setErrors({});
           setIsLoading(false);
           authDispatch({ type: "REGISTER_SUCCESS" });
-        //   console.log("Doalog should open...")
           setDialogOpen(true)
         })
         .catch(err => {
@@ -107,7 +109,8 @@ function RegisterPage(props) {
   }
 
   return (
-    <div>
+    <div style={registerPageStyles}>
+      <h1>Register</h1>
       <Fade in={errors.response}>
         <Typography color="secondary">{errors.response}</Typography>
       </Fade>

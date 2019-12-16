@@ -1,17 +1,18 @@
 import React, { Component } from "react";
-import { withStyles } from "@material-ui/core";
+import { Grid, withStyles } from "@material-ui/core";
+import axios from "axios";
 
 import TopBar from "./TopBar";
 import SideBar from "./SideBar";
 
-const styleSheet = {
+const layoutStyleSheet = {
   content: {
     flexGrow: 1,
     paddingTop: 70,
     paddingLeft: 50,
     paddingRight: 50,
+    minHeight: "100vh",
     width: `100vw`,
-    minHeight: "100vh"
   }
 };
 
@@ -22,23 +23,31 @@ class Layout extends Component {
   }
 
   componentWillMount() {
+    //Change state depending on window size
     this.setState({ narrowScreen: window.innerWidth <= 800 });
     window.addEventListener("resize", () => {
       this.setState({ narrowScreen: window.innerWidth <= 800 });
+    });
+
+    //Fetch highscores via regular api and save in local storage for offline use
+    console.log("Fetching current highscore via api");
+    const url = "/api/scores/";
+    axios.get(url).then(res => {
+      localStorage.dualnback_highscores = JSON.stringify(res.data);
+      console.log("Highscores saved to local storage");
     });
   }
 
   render() {
     var items = [
-      { text: "Play", link: "/play" },
-      { text: "Highscores", link: "/scores" },
-      { text: "Login", link: "/login" },
-      { text: "Register", link: "/register" },
-      { text: "Profile", link: "/profile" },
-      { text: "Logout", action: "logout" },
+      { text: "Play Game", link: "/game", visible: "always" },
+      { text: "Highscores", link: "/scores", visible: "always" },
+      { text: "Login", link: "/login", visible: "not_authenticated" },
+      { text: "Register", link: "/register", visible: "not_authenticated" },
+      { text: "My Profile", link: "/profile", visible: "authenticated" },
+      { text: "Logout", action: "logout", visible: "authenticated" }
     ];
 
-    
     return (
       <>
         <TopBar
@@ -63,10 +72,20 @@ class Layout extends Component {
             history={this.props.history}
           />
         )}
-        <div className={this.props.classes.content}>{this.props.children}</div>
+        <div className={this.props.classes.content}>
+          <Grid
+            container
+            spacing={0}
+            direction="column"
+            alignItems="center"
+            style={{ minHeight: "80vh" }}
+          >
+            {this.props.children}
+          </Grid>
+        </div>
       </>
     );
   }
 }
 
-export default withStyles(styleSheet)(Layout);
+export default withStyles(layoutStyleSheet)(Layout);

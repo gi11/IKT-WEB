@@ -9,30 +9,38 @@ class ScoreDisplay extends Component {
     this.state = {
       endpoint: process.env.REACT_APP_SITE_URL,
       highscores: [],
-      score: { score: 10000, name: "BEST" },
       socket: {}
     };
   }
 
+  getScoresFromLocalStorage() {
+    console.log("No Internet.. fething highscores from localstorage")
+    if (localStorage.hasOwnProperty("dualnback_highscores")) {
+      let scores = JSON.parse(localStorage.dualnback_highscores);
+      this.setHighscores(scores);
+    }
+  }
+
   componentDidMount() {
     const { endpoint } = this.state;
-    console.log("Endpoint:")
-    console.log(endpoint)
+    console.log("Endpoint:");
+    console.log(endpoint);
     const socket = socketIOClient(endpoint);
     this.setState({ socket });
-    socket.emit("new score", this.props.score);
-
-    // testing for socket connections
     socket.on("scores updated", highscores => {
       this.setHighscores(highscores);
     });
-  }
 
-  // sending sockets
-  send = () => {
-    const { socket } = this.state;
-    socket.emit("new score", this.state.score);
-  };
+    socket.emit("get scores");
+    socket.on("connect_error", error => {
+      console.log("connect_error! Fetching scores from localstorage...");
+      this.getScoresFromLocalStorage();
+    });
+    socket.on("reconnect_error", error => {
+      console.log("reconnect_error! Fetching scores from localstorage...");
+      this.getScoresFromLocalStorage();
+    });
+  }
 
   setHighscores = highscores => {
     this.setState({ highscores });
@@ -41,7 +49,6 @@ class ScoreDisplay extends Component {
   render() {
     return (
       <div>
-        <button onClick={() => this.send()}>Send Score</button>
         <ScoreList highscores={this.state.highscores} />
       </div>
     );
