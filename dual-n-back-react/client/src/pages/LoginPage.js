@@ -24,7 +24,7 @@ function LoginPage(props) {
   var authDispatch = useAuthDispatch();
 
   function validate(username, password) {
-    let errors = null;
+    let errors = {};
     if (!username) {
       errors.username = "Username is a required field";
     } else if (username.length < 5) {
@@ -34,6 +34,9 @@ function LoginPage(props) {
       errors.password = "Password is a required field";
     } else if (password.length < 5) {
       errors.password = "Password must be more than 5 characters";
+    }
+    if (Object.keys(errors).length == 0) {
+      return null
     }
     return errors;
   }
