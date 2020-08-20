@@ -27,7 +27,7 @@
     "@angular/platform-browser": "~8.2.13",
     "@angular/platform-browser-dynamic": "~8.2.13",
     "@angular/router": "~8.2.13",
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "compression": "^1.7.4",
     "debug": "^4.1.1",
     "dotenv": "^8.2.0",
